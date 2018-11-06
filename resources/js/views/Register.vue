@@ -93,13 +93,6 @@
                     return alert('Passwords do not match')
                 }
             }
-        },
-        beforeRouteEnter (to, from, next) {
-            if (localStorage.getItem('jwt')) {
-                return next('board');
-            }
-
-            next();
         }
     }
 </script>

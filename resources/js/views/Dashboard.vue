@@ -152,6 +152,7 @@
             },
             markItemSold(id) {
                 this.$api.patch('api/item/'+id, {'available': false}).then(response => {
+                    this.$noty.success("Item marked as sold...")
                     this.getItems();
                 })
 
@@ -159,6 +160,7 @@
             removeItem(id) {
                 if(confirm('Are you sure you want to remove this item?')) {
                     this.$api.delete('api/item/'+id, {'available': false}).then(response => {
+                        this.$noty.success("Item deleted successfully...")
                         this.getItems();
                     })
                 }
@@ -166,13 +168,6 @@
         },
         mounted() {
             this.getItems()
-        },
-        beforeRouteEnter (to, from, next) {
-            if (localStorage.getItem('jwt') === null) {
-                next('/login');
-            }
-
-            next();
         }
     }
 </script>

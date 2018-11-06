@@ -111,6 +111,7 @@
                         available: this.available,
                     })
                         .then(response => {
+                            this.$noty.success("Item created successfully")
                             this.$router.push('/');
                         })
                         .catch(function (error) {

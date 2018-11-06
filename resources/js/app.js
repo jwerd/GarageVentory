@@ -1,12 +1,20 @@
 import Vue          from 'vue'
 import VueRouter    from 'vue-router'
 import axios        from 'axios'
-
 import BootstrapVue from 'bootstrap-vue'
+import VueNoty      from 'vuejs-noty'
+
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'vuejs-noty/dist/vuejs-noty.css'
+
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
+Vue.use(VueNoty, {
+    timeout: 3000,
+    progressBar: true,
+    layout: 'bottomRight'
+});
 Vue.use({
     install(Vue) {
         Vue.prototype.$api = axios.create({
@@ -46,8 +54,17 @@ const router = new VueRouter({
             path: '/register',
             name: 'register',
             component: Register,
-        },
+        }
     ],
+});
+
+router.beforeEach((to, from, next) => {
+    if(to.name !== 'login') {
+        if (localStorage.getItem('jwt') === null) {
+            next('/login');
+        }
+    }
+    next();
 });
 
 const app = new Vue({
