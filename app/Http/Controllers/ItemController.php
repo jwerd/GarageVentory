@@ -16,12 +16,12 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $items = DB::table('items');
         if($request->has('showSoldItems')) {
-            $items->where('available', false);
+            $items = Item::where('available', false);
         } else {
-            $items->where('available', true);
+            $items = Item::where('available', true);
         }
+
         return response()->json($items->get()->toArray());
     }
 
