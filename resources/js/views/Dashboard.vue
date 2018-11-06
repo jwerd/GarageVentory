@@ -47,11 +47,15 @@
             <template slot="actions" slot-scope="row">
                 <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
                 <!--<b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">-->
-                    <!--Info modal-->
-                <!--</b-button>-->
+                    <!--Info modal
+                </b-button>-->
+                <b-button class="btn-danger" size="sm" @click.stop="removeItem(row.item.id)">
+                    Remove
+                </b-button>
+                <!--
                 <b-button size="sm" @click.stop="row.toggleDetails">
                     Edit
-                </b-button>
+                </b-button>-->
             </template>
             <template slot="row-details" slot-scope="row">
                 <b-card>
@@ -91,6 +95,7 @@
                     { key: 'price', label: 'My Price', sortable: true, 'class': 'text-center' },
                     { key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
                     { key: 'available', label: 'In Stock',  sortable: true },
+                    { key: 'actions', label: 'Actions' }
                 ],
                 currentPage: 1,
                 perPage: 15,
@@ -147,9 +152,16 @@
             },
             markItemSold(id) {
                 this.$api.patch('api/item/'+id, {'available': false}).then(response => {
-                    console.log(response)
+                    this.getItems();
                 })
-                this.getItems()
+
+            },
+            removeItem(id) {
+                if(confirm('Are you sure you want to remove this item?')) {
+                    this.$api.delete('api/item/'+id, {'available': false}).then(response => {
+                        this.getItems();
+                    })
+                }
             }
         },
         mounted() {
