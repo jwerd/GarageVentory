@@ -1,0 +1,67 @@
+version: '2'
+services:
+  app:
+    build:
+      context: ./docker/app
+      dockerfile: Dockerfile
+#   image: digi/app
+    ports:
+     - "80:80"
+     - "3000:3000"
+     - "3001:3001"
+    volumes:
+     - .:/var/www/html
+    networks:
+     - digi
+  node:
+    build:
+      context: ./docker/node
+      dockerfile: Dockerfile
+      args:
+        uid: "999"
+#   image: digi/node
+    user: root
+    tty: true
+    volumes:
+      - .:/var/www/html
+    networks:
+      - digi
+#  ngrok:
+#    image: wernight/ngrok
+#    links:
+#      - app
+#    ports:
+#      - "4040:80"
+#    volumes:
+#      - .:/var/www/html
+#    networks:
+#      - digi
+  mysql:
+    image: mysql:5.7
+    ports:
+     - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "secret"
+      MYSQL_DATABASE: "homestead"
+      MYSQL_USER: "homestead"
+      MYSQL_PASSWORD: "secret"
+    volumes:
+     - digimysql:/var/lib/mysql
+     # - ./docker/mysql/conf.d:/etc/mysql/conf.d
+     # - ./docker/mysql/logs:/var/log/mysql
+    networks:
+     - digi
+  redis:
+    image: redis:alpine
+    volumes:
+     - digiredis:/data
+    networks:
+     - digi
+networks:
+  digi:
+    driver: "bridge"
+volumes:
+  digimysql:
+    driver: "local"
+  digiredis:
+    driver: "local"
