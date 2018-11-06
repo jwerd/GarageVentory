@@ -34,8 +34,16 @@
             <template slot="name" slot-scope="row">{{row.value}}</template>
             <template slot="price" slot-scope="row">${{row.value}}</template>
             <template slot="list_price" slot-scope="row">${{row.value}}</template>
-            <template slot="dimension" slot-scope="row">{{row.value.height}}/{{row.value.width}}/{{row.value.depth}}</template>
-            <template slot="available" slot-scope="row">{{row.value?'Available':'Not Available'}}</template>
+            <template slot="dimension" slot-scope="row">
+                <span v-show="row.value.height">H{{row.value.height}}"<br /></span>
+                <span v-show="row.value.width">D{{row.value.width}}"<br /></span>
+                <span v-show="row.value.length">L{{row.value.length}}"</span>
+            </template>
+            <template slot="available" slot-scope="row">{{row.value?'Available':'Not Available'}}
+                <span v-show="row.value">
+                    <br /><a href="#" @click="markItemSold(row.item.id)">This Item is Sold</a>
+                </span>
+            </template>
             <template slot="actions" slot-scope="row">
                 <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
                 <!--<b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">-->
@@ -70,81 +78,6 @@
 
 <script>
     const items = []
-    const olditems = [
-        {
-            name: 'Random Product 1',
-            qty: 5,
-            price: 10.00,
-            list_price: 20.00,
-            dimension: {
-                'height': 10,
-                'width': 10,
-                'length': 10,
-            },
-            available: true,
-        },
-        {
-            name: 'Random Product 2',
-            qty: 5,
-            price: 10.00,
-            list_price: 20.00,
-            dimension: {
-                'height': 10,
-                'width': 10,
-                'length': 10,
-            },
-            available: true,
-        },
-        {
-            name: 'Random Product 3',
-            qty: 5,
-            price: 10.00,
-            list_price: 20.00,
-            dimension: {
-                'height': 10,
-                'width': 10,
-                'length': 10,
-            },
-            available: false,
-        },
-        {
-            name: 'Random Product 4',
-            qty: 5,
-            price: 10.00,
-            list_price: 20.00,
-            dimension: {
-                'height': 10,
-                'width': 10,
-                'length': 10,
-            },
-            available: true,
-        },
-        {
-            name: 'Random Product 5,',
-            qty: 5,
-            price: 10.00,
-            list_price: 20.00,
-            dimension: {
-                'height': 10,
-                'width': 10,
-                'length': 10,
-            },
-            available: true,
-        },
-        {
-            name: 'Random Product 6',
-            qty: 5,
-            price: 10.00,
-            list_price: 20.00,
-            dimension: {
-                'height': 10,
-                'width': 10,
-                'length': 10,
-            },
-            available: true,
-        },
-
-    ]
 
     export default {
         isBusy: false,
@@ -154,17 +87,13 @@
                 fields: [
                     { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
                     { key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
-                    { key: 'dimension', label: 'Dimension (h/w/l)',  sortable: true,  'class': 'text-center' },
+                    { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
                     { key: 'price', label: 'My Price', sortable: true, 'class': 'text-center' },
                     { key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
                     { key: 'available', label: 'In Stock',  sortable: true },
                 ],
                 currentPage: 1,
                 perPage: 15,
-                filterShowing: [
-                    {key: 1, value: 'Only Show Stuff I have'},
-                    {key: 2, value: 'Show All'}
-                ],
                 totalRows: items.length,
                 sortBy: null,
                 sortDesc: false,
@@ -201,7 +130,7 @@
             soldItemsToggle () {
                 this.showSoldItems = !this.showSoldItems;
                 if(this.showSoldItems) {
-                    this.showSoldItemsLabel = 'Switch to Unsold Items';
+                    this.showSoldItemsLabel = 'Switch to Available Items';
                 } else {
                     this.showSoldItemsLabel = 'Switch to Sold Items';
                 }
@@ -215,6 +144,12 @@
                 this.$api.get(endpoint).then(response => {
                     this.items = response.data;
                 })
+            },
+            markItemSold(id) {
+                this.$api.patch('api/item/'+id, {'available': false}).then(response => {
+                    console.log(response)
+                })
+                this.getItems()
             }
         },
         mounted() {
