@@ -3,6 +3,7 @@ import VueRouter    from 'vue-router'
 import axios        from 'axios'
 import BootstrapVue from 'bootstrap-vue'
 import VueNoty      from 'vuejs-noty'
+import swal         from 'sweetalert';
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -17,8 +18,7 @@ Vue.use(VueNoty, {
 });
 Vue.use({
     install(Vue) {
-        Vue.prototype.$api = axios.create({
-        })
+        Vue.prototype.$api = axios.create()
         let token = localStorage.getItem('jwt')
         Vue.prototype.$api.defaults.headers.common['Content-Type'] = 'application/json'
         Vue.prototype.$api.defaults.headers.common['Authorization'] = 'Bearer ' + token
@@ -54,17 +54,8 @@ const router = new VueRouter({
             path: '/register',
             name: 'register',
             component: Register,
-        }
+        },
     ],
-});
-
-router.beforeEach((to, from, next) => {
-    if(to.name !== 'login') {
-        if (localStorage.getItem('jwt') === null) {
-            next('/login');
-        }
-    }
-    next();
 });
 
 const app = new Vue({

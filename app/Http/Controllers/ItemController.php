@@ -93,7 +93,7 @@ class ItemController extends Controller
     {
         $status = $item->update(
             //$request->only(['name', 'qty', 'price', 'list_price', 'dimension', 'user_id'])
-            $request->only(['available'])
+            $request->only(['available','price_sold'])
         );
 
         return response()->json([

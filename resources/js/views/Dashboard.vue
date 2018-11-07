@@ -151,10 +151,30 @@
                 })
             },
             markItemSold(id) {
-                this.$api.patch('api/item/'+id, {'available': false}).then(response => {
-                    this.$noty.success("Item marked as sold...")
-                    this.getItems();
+                swal({
+                    text: 'What did this purchase go for?',
+                    content: "input",
+                    button: {
+                        text: "Save",
+                        closeModal: false,
+                    },
                 })
+                .then(price_sold => {
+                    if (!price_sold) throw null;
+                    this.$api.patch('api/item/'+id, {'available': false, 'price_sold': price_sold}).then(response => {
+                        swal("Nice job!", "Item was marked as sold.", "success");
+                        this.getItems();
+                    })
+                })
+                .catch(err => {
+                    if (err) {
+                        swal("Oh noes!", "The AJAX request failed!", "error");
+                    } else {
+                        swal.stopLoading();
+                        swal.close();
+                    }
+                });
+
 
             },
             removeItem(id) {

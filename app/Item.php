@@ -16,6 +16,7 @@ class Item extends Model
         'qty',
         'price',
         'list_price',
+        'price_sold',
         'dimension',
         'available',
         'user_id',
