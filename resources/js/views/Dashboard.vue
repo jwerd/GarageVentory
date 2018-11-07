@@ -34,6 +34,7 @@
             <template slot="name" slot-scope="row">{{row.value}}</template>
             <template slot="price" slot-scope="row">${{row.value}}</template>
             <template slot="list_price" slot-scope="row">${{row.value}}</template>
+            <template slot="price_sold" slot-scope="row">{{row.value?'$'+row.value:'N/A'}}</template>
             <template slot="dimension" slot-scope="row">
                 <span v-show="row.value.height">H{{row.value.height}}"<br /></span>
                 <span v-show="row.value.width">D{{row.value.width}}"<br /></span>
@@ -88,15 +89,7 @@
         data () {
             return {
                 items: items,
-                fields: [
-                    { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                    { key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
-                    { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
-                    { key: 'price', label: 'My Price', sortable: true, 'class': 'text-center' },
-                    { key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
-                    { key: 'available', label: 'In Stock',  sortable: true },
-                    { key: 'actions', label: 'Actions' }
-                ],
+                fields:[],
                 currentPage: 1,
                 perPage: 15,
                 totalRows: items.length,
@@ -135,8 +128,19 @@
             soldItemsToggle () {
                 this.showSoldItems = !this.showSoldItems;
                 if(this.showSoldItems) {
+                    this.fields = [
+                        { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
+                        { key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
+                        { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
+                        { key: 'price', label: 'My Price', sortable: true, 'class': 'text-center' },
+                        { key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
+                        { key: 'price_sold', label: 'Sold Price', sortable: true, 'class': 'text-center' },
+                        { key: 'available', label: 'In Stock',  sortable: true },
+                        { key: 'actions', label: 'Actions' }
+                    ];
                     this.showSoldItemsLabel = 'Switch to Available Items';
                 } else {
+                    this.fields = this.defaultFields;
                     this.showSoldItemsLabel = 'Switch to Sold Items';
                 }
                 this.getItems()
@@ -187,6 +191,15 @@
             }
         },
         mounted() {
+            this.defaultFields = this.fields = [
+                { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
+                { key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
+                { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
+                { key: 'price', label: 'My Price', sortable: true, 'class': 'text-center' },
+                { key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
+                { key: 'available', label: 'In Stock',  sortable: true },
+                { key: 'actions', label: 'Actions' }
+            ]
             this.getItems()
         }
     }
