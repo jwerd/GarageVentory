@@ -20,7 +20,7 @@
                                 <label for="cost" class="col-sm-4 col-form-label text-md-right">Product Cost</label>
 
                                 <div class="col-md-3">
-                                    <input id="price" placeholder="My Price" type="text" class="form-control" v-model="price" required>
+                                    <input id="price" placeholder="Purchase Price" type="text" class="form-control" v-model="price" required>
                                 </div>
 
                                 <div class="col-md-3">
