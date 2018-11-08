@@ -74,6 +74,7 @@
             <b-col md="4" class="my-1">
                 <div v-show="!showSoldItems">
                     <b-card-group class="mb-2">
+                        <totalsComponent v-bind:items="items"></totalsComponent>
                         <b-card :title="'$'+totalInvestment" bg-variant="light">
                             <p class="card-text">Total Current Investment</p>
                         </b-card>
@@ -92,6 +93,7 @@
                         </b-card>
                     </b-card-group>
                 </div>
+                <totalsComponent></totalsComponent>
             </b-col>
         </b-row>
 
@@ -124,25 +126,6 @@
             }
         },
         computed: {
-            totalProjectedRevenue() {
-              return this.items.reduce(function(total, item){
-                return total + item.list_price; 
-              },0);
-            },
-            totalInvestment() {
-              return this.items.reduce(function(total, item){
-                return total + item.price; 
-              },0);
-            },
-            totalProfit() {
-              let total = this.items.reduce(function(total, item){
-                return total + item.price_sold; 
-              },0);
-              if(total > this.totalInvestment) {
-                  return total-this.totalInvestment;
-              }
-              return total;
-            },
             sortOptions () {
                 // Create an options list from our fields
                 return this.fields
