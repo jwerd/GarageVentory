@@ -35,10 +35,10 @@
                                     <input id="dimension_h" placeholder="Height" type="text" class="form-control" v-model="dimension_h" required>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_d" placeholder="Width" type="text" class="form-control" v-model="dimension_d" required>
+                                    <input id="dimension_d" placeholder="Depth" type="text" class="form-control" v-model="dimension_d" required>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_l" placeholder="Depth" type="text" class="form-control" v-model="dimension_l" required>
+                                    <input id="dimension_l" placeholder="Length" type="text" class="form-control" v-model="dimension_l" required>
                                 </div>
                             </div>
 
