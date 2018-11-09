@@ -125,23 +125,27 @@
         },
         computed: {
             totalProjectedRevenue() {
-              return this.items.reduce(function(total, item){
-                return total + item.list_price; 
-              },0);
+                let total = this.items.reduce(function(total, item){
+                    return total + item.list_price; 
+                },0);
+                if(total > this.totalInvestment) {
+                    return total-this.totalInvestment;
+                }
+                return total;
             },
             totalInvestment() {
-              return this.items.reduce(function(total, item){
-                return total + item.price; 
-              },0);
+                return this.items.reduce(function(total, item){
+                    return total + item.price;
+                },0);
             },
             totalProfit() {
-              let total = this.items.reduce(function(total, item){
-                return total + item.price_sold; 
-              },0);
-              if(total > this.totalInvestment) {
-                  return total-this.totalInvestment;
-              }
-              return total;
+                let total = this.items.reduce(function(total, item){
+                    return total + item.price_sold; 
+                },0);
+                if(total > this.totalInvestment) {
+                    return total-this.totalInvestment;
+                }
+                return total;
             },
             sortOptions () {
                 // Create an options list from our fields
@@ -172,7 +176,7 @@
                         { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
                         { key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
                         { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
-                        { key: 'price', label: 'My Price', sortable: true, 'class': 'text-center' },
+                        { key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                         { key: 'price_sold', label: 'Sold Price', sortable: true, 'class': 'text-center' },
                         { key: 'available', label: 'In Stock',  sortable: true },
                         { key: 'actions', label: 'Actions' }
@@ -234,7 +238,7 @@
                 { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
                 { key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
                 { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
-                { key: 'price', label: 'My Price', sortable: true, 'class': 'text-center' },
+                { key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                 { key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
                 { key: 'available', label: 'In Stock',  sortable: true },
                 { key: 'actions', label: 'Actions' }
