@@ -31,7 +31,11 @@
                  :sort-direction="sortDirection"
                  @filtered="onFiltered"
         >
-            <template slot="name" slot-scope="row">{{row.value}}</template>
+            <template slot="name" slot-scope="row">{{row.value}}
+                <b-button size="sm" @click.stop="row.toggleDetails">
+                {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+                </b-button>
+            </template>
             <template slot="price" slot-scope="row">${{row.value}}</template>
             <template slot="list_price" slot-scope="row">${{row.value}}</template>
             <template slot="price_sold" slot-scope="row">{{row.value?'$'+row.value:'N/A'}}</template>
@@ -50,14 +54,16 @@
                 <!--<b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">-->
                     <!--Info modal
                 </b-button>-->
-                <b-button class="btn-danger" size="sm" @click.stop="removeItem(row.item.id)">
+                <!--<b-button class="btn-danger" size="sm" @click.stop="removeItem(row.item.id)">
                     Remove
-                </b-button>
+                </b-button>-->
                 <!--
                 <b-button size="sm" @click.stop="row.toggleDetails">
                     Edit
                 </b-button>-->
+
             </template>
+
             <template slot="row-details" slot-scope="row">
                 <b-card>
                     <ul>
@@ -174,12 +180,13 @@
                 if(this.showSoldItems) {
                     this.fields = [
                         { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                        { key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
-                        { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
+                        //{ key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
+                        //{ key: 'actions', label: 'Actions' },
+                        /*{ key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
                         { key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                         { key: 'price_sold', label: 'Sold Price', sortable: true, 'class': 'text-center' },
                         { key: 'available', label: 'In Stock',  sortable: true },
-                        { key: 'actions', label: 'Actions' }
+                        { key: 'actions', label: 'Actions' }*/
                     ];
                     this.showSoldItemsLabel = 'Switch to Available Items';
                 } else {
@@ -236,12 +243,13 @@
         mounted() {
             this.defaultFields = this.fields = [
                 { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                { key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
-                { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
+                //{ key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
+                //{ key: 'actions', label: 'Actions' },
+                /*{ key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
                 { key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                 { key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
                 { key: 'available', label: 'In Stock',  sortable: true },
-                { key: 'actions', label: 'Actions' }
+                { key: 'actions', label: 'Actions' }*/
             ]
             this.getItems()
         }
