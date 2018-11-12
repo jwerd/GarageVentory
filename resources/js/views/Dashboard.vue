@@ -41,9 +41,9 @@
                 <span v-show="row.value.length">L{{row.value.length}}"</span>
             </template>
             <template slot="available" slot-scope="row">{{row.value?'Available':'Not Available'}}
-                <!--<span v-show="row.value">
+                <span v-show="row.value">
                     <br /><a href="#" @click="markItemSold(row.item.id)">This Item is Sold</a>
-                </span>-->
+                </span>
             </template>
             <template slot="actions" slot-scope="row">
                 <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
@@ -207,7 +207,7 @@
                 })
                 .then(price_sold => {
                     if (!price_sold) throw null;
-                    this.$api.patch('api/item/'+id, {'available': false, 'price_sold': price_sold}).then(response => {
+                    this.$api.patch('api/sold/'+id, {'available': false, 'price_sold': price_sold}).then(response => {
                         swal("Nice job!", "Item was marked as sold.", "success");
                         this.getItems();
                     })
