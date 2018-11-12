@@ -41,9 +41,9 @@
                 <span v-show="row.value.length">L{{row.value.length}}"</span>
             </template>
             <template slot="available" slot-scope="row">{{row.value?'Available':'Not Available'}}
-                <span v-show="row.value">
+                <!--<span v-show="row.value">
                     <br /><a href="#" @click="markItemSold(row.item.id)">This Item is Sold</a>
-                </span>
+                </span>-->
             </template>
             <template slot="actions" slot-scope="row">
                 <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
