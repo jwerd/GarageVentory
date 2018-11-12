@@ -36,7 +36,7 @@
                                     <input id="dimension_h" placeholder="Height" type="text" class="form-control" v-model="task.dimension.height" required>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_d" placeholder="Depth" type="text" class="form-control" v-model="task.dimension.width" required>
+                                    <input id="dimension_d" placeholder="Depth" type="text" class="form-control" v-model="task.dimension.depth" required>
                                 </div>
                                 <div class="col-md-2">
                                     <input id="dimension_l" placeholder="Length" type="text" class="form-control" v-model="task.dimension.length" required>
@@ -75,7 +75,7 @@
                     console.log(response);
                     this.task = response.data;
                     this.task.dimension_h = response.data.dimension.width;
-                    this.task.dimension_d = response.data.dimension.height;
+                    this.task.dimension_d = response.data.dimension.depth;
                     this.task.dimension_l = response.data.dimension.length;
                 })
                 .catch(function (error) {

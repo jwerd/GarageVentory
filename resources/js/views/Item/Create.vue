@@ -86,7 +86,7 @@
                         list_price: this.list_price,
                         dimension: {
                             height: this.dimension_h,
-                            width: this.dimension_d,
+                            depth: this.dimension_d,
                             length: this.dimension_l,
                         },
                         available: this.available,
