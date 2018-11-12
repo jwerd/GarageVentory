@@ -174,7 +174,6 @@
                 if(this.showSoldItems) {
                     this.fields = [
                         { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                        { key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
                         { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
                         { key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                         { key: 'price_sold', label: 'Sold Price', sortable: true, 'class': 'text-center' },
@@ -236,7 +235,6 @@
         mounted() {
             this.defaultFields = this.fields = [
                 { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                { key: 'qty', label: 'Quantity', sortable: true, 'class': 'text-center' },
                 { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
                 { key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                 { key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },

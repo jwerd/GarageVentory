@@ -46,11 +46,11 @@ class ItemController extends Controller
     {
         $item = Item::create([
             'name'        => $request->name,
-            'qty'         => $request->qty,
+            'qty'         => 1,
             'price'       => $request->price,
             'list_price'  => $request->list_price,
             'dimension'   => $request->dimension,
-            'available'   => $request->available,
+            'available'   => 1,
             'user_id'     => Auth::id() ?? 1,
         ]);
 
@@ -96,11 +96,10 @@ class ItemController extends Controller
     {
         $status = $item->update([
             'name'        => $request->name,
-            'qty'         => $request->qty,
+            'qty'         => 1,
             'price'       => $request->price,
             'list_price'  => $request->list_price,
             'dimension'   => $request->dimension,
-            'available'   => $request->available,
             'user_id'     => Auth::id() ?? 1,
         ]);
 

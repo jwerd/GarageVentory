@@ -43,25 +43,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="size" class="col-sm-4 col-form-label text-md-right">Product Is Available</label>
-
-                                <div class="col-md-6">
-                                    <select class="form-control" v-model="task.available">
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="qty" class="col-sm-4 col-form-label text-md-right">Quantity</label>
-
-                                <div class="col-md-6">
-                                    <input id="qty" type="text" class="form-control" v-model="task.qty" required>
-                                </div>
-                            </div>
-
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary" @click="save">
