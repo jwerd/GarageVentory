@@ -26,6 +26,10 @@ Vue.use({
     }
 });
 
+Vue.filter('truncate', function (text, stop, clamp) {
+    return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+});
+
 import App          from './views/App'
 import Login        from './views/Login'
 import Register     from './views/Register'
