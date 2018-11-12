@@ -18,7 +18,10 @@ class ItemController extends Controller
     {
         $available = $request->has('showSoldItems') ? false : true;
 
-        $items = Item::where('available', $available)->get()->toArray();
+        $items = Item::where('available', $available)
+            ->latest()
+            ->get()
+            ->toArray();
 
         return response()->json($items);
     }
