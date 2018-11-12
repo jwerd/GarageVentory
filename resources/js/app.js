@@ -30,7 +30,8 @@ import App          from './views/App'
 import Login        from './views/Login'
 import Register     from './views/Register'
 import Dashboard    from './views/Dashboard'
-import ItemCreate      from './views/Item/Create'
+import ItemCreate   from './views/Item/Create'
+import ItemUpdate   from './views/Item/Update'
 
 const router = new VueRouter({
     mode: 'history',
@@ -49,6 +50,11 @@ const router = new VueRouter({
             path: '/item/create',
             name: 'itemCreate',
             component: ItemCreate,
+        },
+        {
+            path: '/item/update/:id',
+            name: 'itemUpdate',
+            component: ItemUpdate,
         },
         {
             path: '/register',

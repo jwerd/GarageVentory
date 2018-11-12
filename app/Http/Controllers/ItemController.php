@@ -94,10 +94,15 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        $status = $item->update(
-            //$request->only(['name', 'qty', 'price', 'list_price', 'dimension', 'user_id'])
-            $request->only(['available','price_sold'])
-        );
+        $status = $item->update([
+            'name'        => $request->name,
+            'qty'         => $request->qty,
+            'price'       => $request->price,
+            'list_price'  => $request->list_price,
+            'dimension'   => $request->dimension,
+            'available'   => $request->available,
+            'user_id'     => Auth::id() ?? 1,
+        ]);
 
         return response()->json([
             'status' => $status,
