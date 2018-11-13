@@ -19,8 +19,8 @@
 
         <!-- Main table element -->
         <b-table show-empty
-                 stacked="md"
-                 :striped=true
+                 :striped=fase
+                 :hover=true
                  :items="items"
                  :fields="fields"
                  :current-page="currentPage"
@@ -31,7 +31,7 @@
                  :sort-direction="sortDirection"
                  @filtered="onFiltered"
         >
-            <template slot="name" slot-scope="row"><router-link :to="{ name: 'itemUpdate', params: { id: row.item.id }}">{{row.value | truncate(50)}}</router-link></template>
+            <template slot="name" slot-scope="row"><router-link :to="{ name: 'itemUpdate', params: { id: row.item.id }}">{{row.value | truncate(255)}}</router-link></template>
             <template slot="price" slot-scope="row">${{row.value}}</template>
             <template slot="list_price" slot-scope="row">${{row.value}}</template>
             <template slot="price_sold" slot-scope="row">{{row.value?'$'+row.value:'N/A'}}</template>
@@ -176,9 +176,9 @@
                     this.fields = [
                         { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
                         { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
-                        { key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
+                        //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                         { key: 'price_sold', label: 'Sold Price', sortable: true, 'class': 'text-center' },
-                        { key: 'available', label: 'In Stock',  sortable: true },
+                        //{ key: 'available', label: 'In Stock',  sortable: true },
                         { key: 'actions', label: 'Actions' }
                     ];
                     this.showSoldItemsLabel = 'Switch to Available Items';
@@ -237,9 +237,9 @@
             this.defaultFields = this.fields = [
                 { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
                 { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
-                { key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
-                { key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
-                { key: 'available', label: 'In Stock',  sortable: true },
+                //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
+                //{ key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
+                //{ key: 'available', label: 'In Stock',  sortable: true },
                 { key: 'actions', label: 'Actions' }
             ]
             this.getItems()
