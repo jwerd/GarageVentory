@@ -51,6 +51,13 @@
 
                                 </div>
                             </div>
+                                <br />
+                                    <b-card bg-variant="light">
+                                        <b-button class="btn-danger" size="sm" @click.stop="removeItem(task.id)">
+                                        Remove This Item
+                                        </b-button>
+                                        <span>* This is irreversible</span>
+                                    </b-card>
                         </form>
                     </div>
                 </div>
@@ -95,6 +102,14 @@
                         .catch(function (error) {
                             console.error(error);
                         });
+                }
+            },
+            removeItem(id) {
+                if(confirm('Are you sure you want to remove this item?')) {
+                    this.$api.delete('/api/item/'+id, {'available': false}).then(response => {
+                        this.$noty.success("Item deleted successfully...")
+                        this.$router.push('/');
+                    })
                 }
             },
             btnStatus() {

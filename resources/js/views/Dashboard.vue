@@ -41,22 +41,16 @@
                 <span v-show="row.value.length">L{{row.value.length}}"</span>
             </template>
             <template slot="available" slot-scope="row">{{row.value?'Available':'Not Available'}}
-                <span v-show="row.value">
-                    <br /><a href="#" @click="markItemSold(row.item.id)">This Item is Sold</a>
-                </span>
             </template>
-            <template slot="actions" slot-scope="row">
-                <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
-                <!--<b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">-->
-                    <!--Info modal
-                </b-button>-->
+            <template slot="soldaction" slot-scope="row">
+                <b-button class="btn-success" size="sm" @click="markItemSold(row.item.id)">
+                    Mark Item Sold
+                </b-button>
+            </template>
+            <template slot="removeaction" slot-scope="row">
                 <b-button class="btn-danger" size="sm" @click.stop="removeItem(row.item.id)">
                     Remove
                 </b-button>
-                <!--
-                <b-button size="sm" @click.stop="row.toggleDetails">
-                    Edit
-                </b-button>-->
             </template>
             <template slot="row-details" slot-scope="row">
                 <b-card>
@@ -175,11 +169,11 @@
                 if(this.showSoldItems) {
                     this.fields = [
                         { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                        { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
+                        { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: false,  'class': 'text-center' },
                         //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                         { key: 'price_sold', label: 'Sold Price', sortable: true, 'class': 'text-center' },
                         //{ key: 'available', label: 'In Stock',  sortable: true },
-                        { key: 'actions', label: 'Actions' }
+                        { key: 'removeaction', label: 'Actions' }
                     ];
                     this.showSoldItemsLabel = 'Switch to Available Items';
                 } else {
@@ -226,21 +220,21 @@
             },
             removeItem(id) {
                 if(confirm('Are you sure you want to remove this item?')) {
-                    this.$api.delete('api/item/'+id, {'available': false}).then(response => {
+                    this.$api.delete('/api/item/'+id, {'available': false}).then(response => {
                         this.$noty.success("Item deleted successfully...")
                         this.getItems();
                     })
                 }
-            }
+            },
         },
         mounted() {
             this.defaultFields = this.fields = [
                 { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: true,  'class': 'text-center' },
+                { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: false,  'class': 'text-center' },
                 //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                 //{ key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
                 //{ key: 'available', label: 'In Stock',  sortable: true },
-                { key: 'actions', label: 'Actions' }
+                { key: 'soldaction', label: 'Actions' }
             ]
             this.getItems()
         }
