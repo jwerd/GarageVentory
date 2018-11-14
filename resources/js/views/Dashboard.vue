@@ -31,13 +31,13 @@
                  :sort-direction="sortDirection"
                  @filtered="onFiltered"
         >
-            <template slot="name" slot-scope="row"><router-link :to="{ name: 'itemUpdate', params: { id: row.item.id }}">{{row.value | truncate(255)}}</router-link></template>
+            <template slot="name" slot-scope="row"><router-link :to="{ name: 'itemUpdate', params: { id: row.item.id }}">{{row.value | truncate(50)}}</router-link></template>
             <template slot="price" slot-scope="row">${{row.value}}</template>
             <template slot="list_price" slot-scope="row">${{row.value}}</template>
             <template slot="price_sold" slot-scope="row">{{row.value?'$'+row.value:'N/A'}}</template>
             <template slot="dimension" slot-scope="row">
                 <span v-show="row.value.height">H{{row.value.height}}"<br /></span>
-                <span v-show="row.value.width">D{{row.value.width}}"<br /></span>
+                <span v-show="row.value.depth">D{{row.value.depth}}"<br /></span>
                 <span v-show="row.value.length">L{{row.value.length}}"</span>
             </template>
             <template slot="available" slot-scope="row">{{row.value?'Available':'Not Available'}}
