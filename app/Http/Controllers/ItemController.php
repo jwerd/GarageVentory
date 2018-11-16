@@ -19,6 +19,7 @@ class ItemController extends Controller
         $available = $request->has('showSoldItems') ? false : true;
 
         $items = Item::where('available', $available)
+            ->where('user_id', Auth::id())
             ->latest()
             ->get()
             ->toArray();
