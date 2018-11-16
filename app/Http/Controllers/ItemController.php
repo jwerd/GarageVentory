@@ -44,6 +44,10 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|max:255',
+        ]);
+
         $item = Item::create([
             'name'        => $request->name,
             'qty'         => 1,
