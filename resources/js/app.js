@@ -26,6 +26,7 @@ Vue.use({
     }
 });
 
+/* todo: move filters to separate area*/
 Vue.filter('truncate', function (text, stop, clamp) {
     return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
 });
@@ -67,7 +68,14 @@ const router = new VueRouter({
         },
     ],
 });
-
+router.beforeEach((to, from, next) => {
+    if (localStorage.getItem('jwt') === null) {
+        if (to.name !== "login") {
+            next('/login');
+        }
+    }
+    next();
+});
 const app = new Vue({
     el: '#app',
     components: { App },

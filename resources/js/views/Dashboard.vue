@@ -19,7 +19,7 @@
 
         <!-- Main table element -->
         <b-table show-empty
-                 :striped=fase
+                 :striped=false
                  :hover=true
                  :items="items"
                  :fields="fields"
@@ -189,7 +189,11 @@
                 }
                 this.$api.get(endpoint).then(response => {
                     this.items = response.data;
-                })
+                }).catch(err => {
+                    if(err) {
+                        console.log('Unauthorized');
+                    }
+                });
             },
             markItemSold(id) {
                 swal({
