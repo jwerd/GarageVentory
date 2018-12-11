@@ -19,10 +19,15 @@
 
         <div>
             <h5>Weekly Goal</h5>
-            <b-progress height="2em" :max="weeklyStats.max_total" show-progress>
-                <b-progress-bar variant="success" :value="weeklyStats.total" animated>${{weeklyStats.total}} earned</b-progress-bar>
+            <b-progress height="2em" :show-value="false" :max="weeklyStats.max_total" show-progress>
+                <b-progress-bar variant="success" :show-value="false" :value="weeklyStats.total" animated>
+                    <template v-if="weeklyStats.total > 0">${{weeklyStats.total}} earned</template>
+                </b-progress-bar>
             </b-progress>
-            <div align="right">Left to make for the week: ${{leftOfWeeklyGoal}}</div>
+            <div align="right">
+                <template v-if="!weeklyStats.metThreshold">Left to make for the week: ${{leftOfWeeklyGoal}}</template>
+                <template v-else><strong>You've reached your goal! YAY!</strong></template>
+            </div>
         </div>
 
         <!-- Main table element -->
@@ -190,7 +195,7 @@
                 if(this.showSoldItems) {
                     this.fields = [
                         { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                        { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: false,  'class': 'text-center' },
+                        { key: 'dimension', label: 'Dimensions (h/d/l)',  sortable: false,  'class': 'text-center' },
                         //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                         { key: 'price_sold', label: 'Sold Price', sortable: true, 'class': 'text-center' },
                         //{ key: 'available', label: 'In Stock',  sortable: true },
@@ -210,6 +215,7 @@
                 }
                 this.$api.get(endpoint).then(response => {
                     this.items = response.data;
+                    this.checkWeeklyGoal()
                 }).catch(err => {
                     if(err) {
                         console.log('Unauthorized');
@@ -265,14 +271,13 @@
         mounted() {
             this.defaultFields = this.fields = [
                 { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                { key: 'dimension', label: 'Dimension (h/d/l)',  sortable: false,  'class': 'text-center' },
+                { key: 'dimension', label: 'Dimensions (h/d/l)',  sortable: false,  'class': 'text-center' },
                 //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                 //{ key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
                 //{ key: 'available', label: 'In Stock',  sortable: true },
                 { key: 'soldaction', label: 'Actions' }
             ]
             this.getItems()
-            this.checkWeeklyGoal()
         }
     }
 </script>

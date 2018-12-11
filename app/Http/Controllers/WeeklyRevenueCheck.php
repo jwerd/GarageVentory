@@ -25,7 +25,7 @@ class WeeklyRevenueCheck extends Controller
         
         // Return data to user
         return response()->json([
-            'max_total'          => (int) $this->weeklyThreshold,
+            'max_total'    => (int) $this->weeklyThreshold,
             'total'        => $sum,
             'metThreshold' => $metThreshold, 
             'percent'      => $percent,
