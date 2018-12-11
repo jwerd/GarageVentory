@@ -17,6 +17,14 @@
             </b-col>
         </b-row>
 
+        <div>
+            <h5>Weekly Goal</h5>
+            <b-progress height="2em" :max="weeklyStats.max_total" show-progress>
+                <b-progress-bar variant="success" :value="weeklyStats.total" animated>${{weeklyStats.total}} earned</b-progress-bar>
+            </b-progress>
+            <div align="right">Left to make for the week: ${{leftOfWeeklyGoal}}</div>
+        </div>
+
         <!-- Main table element -->
         <b-table show-empty
                  :striped=false
@@ -104,6 +112,13 @@
         isBusy: false,
         data () {
             return {
+                weeklyStats: {
+                    total: 0,
+                    max_total:   0,
+                    metThreshold: false,
+                },
+                weeklyGoalTotal: 285,
+                weeklyGoalMax: 300,
                 items: items,
                 fields:[],
                 currentPage: 1,
@@ -119,6 +134,12 @@
             }
         },
         computed: {
+            leftOfWeeklyGoal() {
+                if(this.weeklyStats.max_total > this.weeklyStats.total) {
+                    return this.weeklyStats.max_total-this.weeklyStats.total;
+                }
+                return 0;
+            },
             totalProjectedRevenue() {
                 let total = this.items.reduce(function(total, item){
                     return total + item.list_price; 
@@ -195,6 +216,16 @@
                     }
                 });
             },
+            checkWeeklyGoal () {
+                let endpoint = 'api/weeklyRevenueCheck';
+                this.$api.get(endpoint).then(response => {
+                    this.weeklyStats = response.data;
+                }).catch(err => {
+                    if(err) {
+                        console.log('Unauthorized');
+                    }
+                });
+            },
             markItemSold(id) {
                 swal({
                     text: 'What did this purchase go for?',
@@ -241,6 +272,7 @@
                 { key: 'soldaction', label: 'Actions' }
             ]
             this.getItems()
+            this.checkWeeklyGoal()
         }
     }
 </script>
