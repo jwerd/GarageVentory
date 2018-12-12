@@ -45,9 +45,7 @@
             <template slot="available" slot-scope="row">{{row.value?'Available':'Not Available'}}
             </template>
             <template slot="soldaction" slot-scope="row">
-                <b-button class="btn-success" size="sm" @click="markItemSold(row.item.id)">
-                    Mark Item Sold
-                </b-button>
+                <MarkItemSold :item="row.item" @refreshItems="getItems"></MarkItemSold>
             </template>
             <template slot="removeaction" slot-scope="row">
                 <b-button class="btn-danger" size="sm" @click.stop="removeItem(row.item.id)">
@@ -68,49 +66,36 @@
                 <b-pagination :total-rows="totalRows" :per-page="perPage" v-model="currentPage" class="my-0" />
             </b-col>
             <b-col md="4" class="my-1">
-                <div v-show="!showSoldItems">
+                <div v-if="!showSoldItems">
                     <b-card-group class="mb-2">
-                        <b-card :title="'$'+totalInvestment" bg-variant="light">
-                            <p class="card-text">Total Current Investment</p>
-                        </b-card>
-                        <b-card :title="'$'+totalProjectedRevenue+'*'" bg-variant="light">
-                            <p class="card-text">Total Projected Revenue</p>
-                        </b-card>
+                        <StatsCard :items="items" title="Total Current Investment" type="totalInvestment"></StatsCard>
+                        <StatsCard :items="items" title="Total Projected Revenue" type="totalProjectedRevenue"></StatsCard>
                     </b-card-group>
                 </div>
-                <div v-show="showSoldItems">
+                <div v-else>
                     <b-card-group class="mb-2">
-                        <b-card :title="'$'+totalInvestment" bg-variant="light">
-                            <p class="card-text">Total Current Investment</p>
-                        </b-card>
-                        <b-card :title="'$'+totalProfit" bg-variant="light">
-                            <p class="card-text">Total Profit</p>
-                        </b-card>
+                        <StatsCard :items="items" title="Total Current Investment" type="totalInvestment"></StatsCard>
+                        <StatsCard :items="items" title="Total Profit" type="totalProfit"></StatsCard>
                     </b-card-group>
                 </div>
             </b-col>
         </b-row>
-
-        <!-- Info modal -->
-        <b-modal id="modalInfo" @hide="resetModal" :title="modalInfo.title" ok-only>
-            <pre>{{ modalInfo.content }}</pre>
-        </b-modal>
     </b-container>
 </template>
-                Total Project Revenue: $1,500
+
 <script>
     import WeeklyGoal from "../components/WeeklyGoal"
+    import StatsCard from "../components/StatsCard"
+    import MarkItemSold from "../components/MarkItemSold"
 
     const items = []
 
     export default {
         isBusy: false,
-        components: {WeeklyGoal},
+        components: {WeeklyGoal, StatsCard, MarkItemSold},
         data () {
             return {
                 updateWeeklyGoal: false,
-                weeklyGoalTotal: 285,
-                weeklyGoalMax: 300,
                 items: items,
                 fields:[],
                 currentPage: 1,
@@ -126,30 +111,6 @@
             }
         },
         computed: {
-
-            totalProjectedRevenue() {
-                let total = this.items.reduce(function(total, item){
-                    return total + item.list_price; 
-                },0);
-                if(total > this.totalInvestment) {
-                    return total-this.totalInvestment;
-                }
-                return total;
-            },
-            totalInvestment() {
-                return this.items.reduce(function(total, item){
-                    return total + item.price;
-                },0);
-            },
-            totalProfit() {
-                let total = this.items.reduce(function(total, item){
-                    return total + item.price_sold; 
-                },0);
-                if(total > this.totalInvestment) {
-                    return total-this.totalInvestment;
-                }
-                return total;
-            },
             sortOptions () {
                 // Create an options list from our fields
                 return this.fields
@@ -158,11 +119,6 @@
             }
         },
         methods: {
-            info (item, index, button) {
-                this.modalInfo.title = `Row index: ${index}`
-                this.modalInfo.content = JSON.stringify(item, null, 2)
-                this.$emit('bv::show::modal', 'modalInfo', button)
-            },
             resetModal () {
                 this.modalInfo.title = ''
                 this.modalInfo.content = ''
@@ -205,34 +161,6 @@
                     }
                 });
             },
-
-            markItemSold(id) {
-                swal({
-                    text: 'What did this purchase go for?',
-                    content: "input",
-                    button: {
-                        text: "Save",
-                        closeModal: false,
-                    },
-                })
-                .then(price_sold => {
-                    if (!price_sold) throw null;
-                    this.$api.patch('api/sold/'+id, {'available': false, 'price_sold': price_sold}).then(response => {
-                        swal("Nice job!", "Item was marked as sold.", "success");
-                        this.getItems();
-                    })
-                })
-                .catch(err => {
-                    if (err) {
-                        swal("Oh noes!", "The AJAX request failed!", "error");
-                    } else {
-                        swal.stopLoading();
-                        swal.close();
-                    }
-                });
-
-
-            },
             removeItem(id) {
                 if(confirm('Are you sure you want to remove this item?')) {
                     this.$api.delete('/api/item/'+id, {'available': false}).then(response => {
@@ -243,6 +171,11 @@
             },
         },
         mounted() {
+            /*
+            this.app.$on('refreshItems', () => {
+                console.log('refreshing items');
+                this.getItems();
+            });*/
             this.defaultFields = this.fields = [
                 { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
                 { key: 'dimension', label: 'Dimensions (h/d/l)',  sortable: false,  'class': 'text-center' },
