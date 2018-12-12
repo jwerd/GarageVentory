@@ -17,18 +17,7 @@
             </b-col>
         </b-row>
 
-        <div>
-            <h5>Weekly Goal</h5>
-            <b-progress height="2em" :show-value="false" :max="weeklyStats.max_total" show-progress>
-                <b-progress-bar variant="success" :show-value="false" :value="weeklyStats.total" animated>
-                    <template v-if="weeklyStats.total > 0">${{weeklyStats.total}} earned</template>
-                </b-progress-bar>
-            </b-progress>
-            <div align="right">
-                <template v-if="!weeklyStats.metThreshold">Left to make for the week: ${{leftOfWeeklyGoal}}</template>
-                <template v-else><strong>You've reached your goal! YAY!</strong></template>
-            </div>
-        </div>
+        <weekly-goal :update.sync="updateWeeklyGoal"></weekly-goal>
 
         <!-- Main table element -->
         <b-table show-empty
@@ -110,18 +99,16 @@
 </template>
                 Total Project Revenue: $1,500
 <script>
+    import WeeklyGoal from "../components/WeeklyGoal"
 
     const items = []
 
     export default {
         isBusy: false,
+        components: {WeeklyGoal},
         data () {
             return {
-                weeklyStats: {
-                    total: 0,
-                    max_total:   0,
-                    metThreshold: false,
-                },
+                updateWeeklyGoal: false,
                 weeklyGoalTotal: 285,
                 weeklyGoalMax: 300,
                 items: items,
@@ -139,12 +126,7 @@
             }
         },
         computed: {
-            leftOfWeeklyGoal() {
-                if(this.weeklyStats.max_total > this.weeklyStats.total) {
-                    return this.weeklyStats.max_total-this.weeklyStats.total;
-                }
-                return 0;
-            },
+
             totalProjectedRevenue() {
                 let total = this.items.reduce(function(total, item){
                     return total + item.list_price; 
@@ -179,7 +161,7 @@
             info (item, index, button) {
                 this.modalInfo.title = `Row index: ${index}`
                 this.modalInfo.content = JSON.stringify(item, null, 2)
-                this.$root.$emit('bv::show::modal', 'modalInfo', button)
+                this.$emit('bv::show::modal', 'modalInfo', button)
             },
             resetModal () {
                 this.modalInfo.title = ''
@@ -215,23 +197,15 @@
                 }
                 this.$api.get(endpoint).then(response => {
                     this.items = response.data;
-                    this.checkWeeklyGoal()
+                    console.log('getting all the items');
+                    this.updateWeeklyGoal = !this.updateWeeklyGoal
                 }).catch(err => {
                     if(err) {
-                        console.log('Unauthorized');
+                        console.log(err);
                     }
                 });
             },
-            checkWeeklyGoal () {
-                let endpoint = 'api/weeklyRevenueCheck';
-                this.$api.get(endpoint).then(response => {
-                    this.weeklyStats = response.data;
-                }).catch(err => {
-                    if(err) {
-                        console.log('Unauthorized');
-                    }
-                });
-            },
+
             markItemSold(id) {
                 swal({
                     text: 'What did this purchase go for?',
