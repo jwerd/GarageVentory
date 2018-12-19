@@ -18,6 +18,7 @@ Route::post('register', 'UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('/item', 'ItemController');
+    Route::resource('/goals', 'GoalsController');
     Route::patch('/sold/{item}', 'SoldItemController@update');
     Route::get('/weeklyRevenueCheck', 'WeeklyRevenueCheck');
 });
