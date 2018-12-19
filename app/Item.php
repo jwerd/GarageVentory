@@ -11,8 +11,10 @@ class Item extends Model
     protected $casts = [
         'dimension' => 'array',
     ];
+    
     protected $fillable = [
         'name',
+        'description',
         'qty',
         'price',
         'list_price',

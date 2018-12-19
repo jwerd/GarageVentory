@@ -51,6 +51,7 @@ class ItemController extends Controller
 
         $item = Item::create([
             'name'        => $request->name,
+            'description' => $request->description,
             'qty'         => 1,
             'price'       => $request->price,
             'list_price'  => $request->list_price,
@@ -101,6 +102,7 @@ class ItemController extends Controller
     {
         $status = $item->update([
             'name'        => $request->name,
+            'description' => $request->description,
             'qty'         => 1,
             'price'       => $request->price,
             'list_price'  => $request->list_price,

@@ -9,13 +9,13 @@
                     <div class="card-body">
                         <form method="POST" action="/login">
                             <div class="form-group row">
-                                <label for="name" class="col-sm-4 col-form-label text-md-right">Product Name</label>
+                                <label for="name" class="col-sm-4 col-form-label text-md-right">Product Name *</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" v-model="name" required autofocus>
                                 </div>
                             </div>
-
+                            
                             <div class="form-group row">
                                 <label for="cost" class="col-sm-4 col-form-label text-md-right">Product Cost</label>
 
@@ -42,6 +42,13 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="cost" class="col-sm-4 col-form-label text-md-right">Extra Description</label>
+                                <div class="col-md-6">
+                                    <input id="name" type="text" class="form-control" v-model="description" placeholder="This product is black, red and Jason" required autofocus>
+                                </div>
+                            </div>
+
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
                                     <button type="submit" class="btn btn-primary" @click="save">
@@ -64,6 +71,7 @@
         data(){
             return {
                 name : "",
+                description: "",
                 qty : 1,
                 price : "",
                 list_price : "",
@@ -81,6 +89,7 @@
                 if (this.name.length > 0) {
                     this.$api.post('/api/item', {
                         name: this.name,
+                        description: this.description,
                         qty: this.qty,
                         price: this.price,
                         list_price: this.list_price,
