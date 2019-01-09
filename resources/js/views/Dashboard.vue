@@ -4,7 +4,7 @@
         <b-row>
             <b-col md="6" class="my-1">
                 <b-input-group>
-                    <b-form-input v-model="filter" placeholder="Type to Search" />
+                    <b-form-input v-model="filter" placeholder="Type to Search" autocomplete="off" />
                     <b-input-group-append>
                         <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
                     </b-input-group-append>
@@ -68,14 +68,14 @@
             <b-col md="4" class="my-1">
                 <div v-if="!showSoldItems">
                     <b-card-group class="mb-2">
-                        <StatsCard :items="items" title="Jason's Current Investment" type="totalInvestment"></StatsCard>
-                        <StatsCard :items="items" title="Jason's Projected Revenue" type="totalProjectedRevenue"></StatsCard>
+                        <StatsCard :items="items" title="Current Investment" type="totalInvestment"></StatsCard>
+                        <StatsCard :items="items" title="Projected Revenue" type="totalProjectedRevenue"></StatsCard>
                     </b-card-group>
                 </div>
                 <div v-else>
                     <b-card-group class="mb-2">
-                        <StatsCard :items="items" title="Jason's Current Investment" type="totalInvestment"></StatsCard>
-                        <StatsCard :items="items" title="Jason's Profit" type="totalProfit"></StatsCard>
+                        <StatsCard :items="items" title="Current Investment" type="totalInvestment"></StatsCard>
+                        <StatsCard :items="items" title="Profit" type="totalProfit"></StatsCard>
                     </b-card-group>
                 </div>
             </b-col>
