@@ -69,7 +69,7 @@
                 <div v-if="!showSoldItems">
                     <b-card-group class="mb-2">
                         <StatsCard :items="items" title="Current Investment" type="totalInvestment"></StatsCard>
-                        <StatsCard :items="items" title="Projected Revenue" type="totalProjectedRevenue"></StatsCard>
+                        <StatsCard :items="items" title="Projected Total" type="totalProjectedRevenue"></StatsCard>
                     </b-card-group>
                 </div>
                 <div v-else>

@@ -30,9 +30,6 @@
                 let total = this.items.reduce(function(total, item){
                     return total + item.list_price; 
                 },0);
-                if(total > this.totalInvestment) {
-                    return total-this.totalInvestment;
-                }
                 return total;
             },
             totalInvestment() {
