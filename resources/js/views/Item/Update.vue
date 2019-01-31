@@ -46,7 +46,7 @@
                             <div class="form-group row">
                                 <label for="cost" class="col-sm-4 col-form-label text-md-right">Extra Description</label>
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" v-model="task.description" placeholder="This product is black, red and Jason" required autofocus>
+                                    <input id="name" type="text" class="form-control" v-model="task.description" placeholder="Example: This was purchased at Habitat for Humanity" required autofocus>
                                 </div>
                             </div>
 
