@@ -103,7 +103,6 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        dd($request->all());
         $status = $item->update([
             'name'        => $request->name,
             'description' => $request->description,
