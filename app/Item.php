@@ -14,6 +14,7 @@ class Item extends Model implements HasMedia
     use HasMediaTrait;
 
     protected $primaryKey = 'id';
+    protected $table      = 'items';
 
     protected $casts = [
         'dimension' => 'array',
@@ -21,6 +22,7 @@ class Item extends Model implements HasMedia
 
     public $incremeting = true;
     
+
     protected $fillable = [
         'name',
         'description',
