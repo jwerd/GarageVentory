@@ -16,6 +16,8 @@ class Item extends Model implements HasMedia
     protected $casts = [
         'dimension' => 'array',
     ];
+
+    public $incremeting = true;
     
     protected $fillable = [
         'name',
