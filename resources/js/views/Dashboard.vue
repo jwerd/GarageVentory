@@ -33,6 +33,13 @@
                  :sort-direction="sortDirection"
                  @filtered="onFiltered"
         >
+            <template slot="photo_with_name" slot-scope="row" align="center">
+                <router-link :to="{ name: 'itemUpdate', params: { id: row.item.id }}">
+                    <template v-show="row.item.photo"><img :src="row.item.photo" fluid-grow></template>
+                    <p style="margin-bottom:0px;">{{row.item.name | truncate(50)}}</p>
+                </router-link>
+                <template v-show="row.item.description"><p class="subtitle-description">{{row.item.description}}</p></template>
+            </template>
             <template slot="name" slot-scope="row">
                 <router-link :to="{ name: 'itemUpdate', params: { id: row.item.id }}">{{row.value | truncate(50)}}</router-link>
                 <template v-show="row.item.description"><p class="subtitle-description">{{row.item.description}}</p></template>
@@ -155,7 +162,7 @@
                     endpoint += '?showSoldItems=1';
                 }
                 this.$api.get(endpoint).then(response => {
-                    this.items = response.data;
+                    this.items = response.data.data;
                     console.log('getting all the items');
                     this.updateWeeklyGoal = !this.updateWeeklyGoal
                 }).catch(err => {
@@ -180,6 +187,7 @@
                 this.getItems();
             });*/
             this.defaultFields = this.fields = [
+                //{ key: 'photo_with_name', label: '#', sortable: false },
                 { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
                 { key: 'dimension', label: 'Dimensions (h/d/l)',  sortable: false,  'class': 'text-center' },
                 //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },

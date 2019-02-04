@@ -6,6 +6,8 @@ use App\Item;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\ItemsCollection;
+use App\Http\Resources\ItemResource;
 
 class ItemController extends Controller
 {
@@ -21,10 +23,9 @@ class ItemController extends Controller
         $items = Item::where('available', $available)
             ->where('user_id', Auth::id())
             ->latest()
-            ->get()
-            ->toArray();
-
-        return response()->json($items);
+            ->get();
+        return new ItemsCollection($items);
+        //return response()->json($items);
     }
 
     /**
@@ -60,6 +61,8 @@ class ItemController extends Controller
             'user_id'     => Auth::id() ?? 1,
         ]);
 
+        Item::find($item->id)->addMedia($request->image)->toMediaCollection();
+
         $data = [
             'data' => $item,
             'status' => (bool) $item,
@@ -77,7 +80,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return response()->json($item);
+        return new ItemResource($item);
     }
 
     /**
@@ -100,6 +103,7 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
+        dd($request->all());
         $status = $item->update([
             'name'        => $request->name,
             'description' => $request->description,
@@ -109,7 +113,9 @@ class ItemController extends Controller
             'dimension'   => $request->dimension,
             'user_id'     => Auth::id() ?? 1,
         ]);
-
+        if(isset($request->image)) {
+            $item->addMedia($request->image)->toMediaCollection();
+        }
         return response()->json([
             'status' => $status,
             'message' => $status ? 'Item Updated!' : 'Error Updating Item'

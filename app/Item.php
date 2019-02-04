@@ -4,10 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\Models\Media;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Item extends Model
+class Item extends Model implements HasMedia
 {
     use SoftDeletes;
+    use HasMediaTrait;
+
     protected $casts = [
         'dimension' => 'array',
     ];
@@ -26,6 +31,13 @@ class Item extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+    
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')
+              ->width(200)
+              ->sharpen(10);
     }
 //
 //    public function getDimensionAttribute()
