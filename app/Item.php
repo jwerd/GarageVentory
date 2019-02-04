@@ -13,6 +13,8 @@ class Item extends Model implements HasMedia
     use SoftDeletes;
     use HasMediaTrait;
 
+    protected $primaryKey = 'id';
+
     protected $casts = [
         'dimension' => 'array',
     ];
