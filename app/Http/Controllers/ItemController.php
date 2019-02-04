@@ -74,7 +74,7 @@ class ItemController extends Controller
         //     'user_id'     => Auth::id() ?? 1,
         // ]);
 
-        $item->addMedia($request->image)->toMediaCollection();
+        //$item->addMedia($request->image)->toMediaCollection();
 
         $data = [
             'data' => $item,
