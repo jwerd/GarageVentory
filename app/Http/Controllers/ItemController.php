@@ -50,18 +50,31 @@ class ItemController extends Controller
             'name' => 'required|max:255',
         ]);
 
-        $item = Item::create([
-            'name'        => $request->name,
-            'description' => $request->description,
-            'qty'         => 1,
-            'price'       => $request->price,
-            'list_price'  => $request->list_price,
-            'dimension'   => $request->dimension,
-            'available'   => 1,
-            'user_id'     => Auth::id() ?? 1,
-        ]);
+        $item = new Item;
 
-        Item::find($item->id)->addMedia($request->image)->toMediaCollection();
+        $item->name        = $request->name;
+        $item->description = $request->description;
+        $item->qty         = 1;
+        $item->price       = $request->price;
+        $item->list_price  = $request->list_price;
+        $item->dimension   = $request->dimension;
+        $item->available   = 1;
+        $item->user_id     = Auth::id() ?? 1;
+        
+        $item->save();
+
+        // $item = Item::create([
+        //     'name'        => $request->name,
+        //     'description' => $request->description,
+        //     'qty'         => 1,
+        //     'price'       => $request->price,
+        //     'list_price'  => $request->list_price,
+        //     'dimension'   => $request->dimension,
+        //     'available'   => 1,
+        //     'user_id'     => Auth::id() ?? 1,
+        // ]);
+
+        $item->addMedia($request->image)->toMediaCollection();
 
         $data = [
             'data' => $item,
