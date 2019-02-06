@@ -63,7 +63,7 @@ class ItemController extends Controller
 
         //$item->addMedia($request->image)->toMediaCollection();
         $data = [
-            new ItemResource($item),
+            'data'    => $item,
             'status'  => (bool) $item,
             'message' => $item ? 'Item Created!' : 'Error Creating Item',
         ];

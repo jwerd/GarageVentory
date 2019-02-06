@@ -126,8 +126,6 @@
             save(e){
                 e.preventDefault()
                 if (this.name.length > 0) {
-                    const fd = new FormData()
-                    fd.append('image', this.selectedImage, this.selectedImage.name)
 
                     this.$api.post('/api/item', {
                         name: this.name,
@@ -143,7 +141,20 @@
                         available: this.available,
                     })
                     .then(response => {
+                            let id = response.data.data.id;
                             console.log(response);
+                            if(this.selectedImage !== "") {
+                                const fd = new FormData()
+                                fd.append('image', this.selectedImage, this.selectedImage.name)
+                                this.$api.post('/api/ItemMedia/'+id, fd,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                                }).then(response => {
+                                        this.$noty.success("Media uploaded successfully")
+                                    })
+                            }
                             this.$noty.success("Item created successfully")
                             this.$router.push('/');
                         })

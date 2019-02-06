@@ -20,4 +20,5 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('/item', 'ItemController');
     Route::patch('/sold/{item}', 'SoldItemController@update');
     Route::get('/weeklyRevenueCheck', 'WeeklyRevenueCheck');
+    Route::post('/ItemMedia/{item}', 'ItemMediaController');
 });
