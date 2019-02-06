@@ -127,24 +127,22 @@
                 e.preventDefault()
                 if (this.name.length > 0) {
                     const fd = new FormData()
-                    
                     fd.append('image', this.selectedImage, this.selectedImage.name)
-                    fd.set('name', this.name)
-                    fd.set('description', this.description)
-                    fd.set('qty', this.qty)
-                    fd.set('price', this.price)
-                    fd.set('list_price', this.list_price)
-                    fd.set('dimension[height]', this.dimension_h)
-                    fd.set('dimension[depth]', this.dimension_d)
-                    fd.set('dimension[length]', this.dimension_l)
-                    fd.set('available', this.available)
 
-                    this.$api.post('/api/item', fd,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }).then(response => {
+                    this.$api.post('/api/item', {
+                        name: this.name,
+                        description: this.description,
+                        qty: this.qty,
+                        price: this.price,
+                        list_price: this.list_price,
+                        dimension: {
+                            height: this.dimension_h,
+                            depth: this.dimension_d,
+                            length: this.dimension_l,
+                        },
+                        available: this.available,
+                    })
+                    .then(response => {
                             this.$noty.success("Item created successfully")
                             this.$router.push('/');
                         })
