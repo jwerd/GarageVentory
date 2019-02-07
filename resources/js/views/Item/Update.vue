@@ -116,25 +116,21 @@
             save(e){
                 e.preventDefault()
                 if (this.item.name.length > 0) {
-                    const fd = new FormData()
 
-                    fd.append('image', this.selectedImage, this.selectedImage.name)
-                    fd.set('name', this.item.name)
-                    fd.set('description', this.item.description)
-                    fd.set('qty', this.item.qty)
-                    fd.set('price', this.item.price)
-                    fd.set('list_price', this.item.list_price)
-                    fd.set('dimension[height]', this.item.dimension.height)
-                    fd.set('dimension[depth]', this.item.dimension.depth)
-                    fd.set('dimension[length]', this.item.dimension.length)
-                    fd.set('available', this.item.available)
-
-                    this.$api.put('/api/item/'+this.id, fd,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }).then(response => {
+                    this.$api.put('/api/item/'+this.id, this.item)
+                        .then(response => {
+                            const fd = new FormData()
+                            if(this.selectedImage !== "") {
+                                fd.append('image', this.selectedImage, this.selectedImage.name)
+                                this.$api.post('/api/ItemMedia/'+this.id, fd,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                                }).then(response => {
+                                        this.$noty.success("Media uploaded successfully")
+                                    })
+                            }
                             this.$noty.success("Item updated successfully")
                             this.$router.push('/');
                         })
