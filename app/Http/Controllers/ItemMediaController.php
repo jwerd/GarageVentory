@@ -12,7 +12,10 @@ class ItemMediaController extends Controller
     public function __invoke(Request $request, Item $item)
     {
         try {
-            $item->addMedia($request->image)->toMediaCollection();
+            $item
+                ->clearMediaCollection()
+                ->addMedia($request->image)
+                ->toMediaCollection();
             
             return response()->json([
                 'status'  => true,

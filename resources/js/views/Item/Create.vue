@@ -84,7 +84,7 @@
         data(){
             return {
                 image: "",
-                selectedImage: {},
+                selectedImage: '',
                 name : "",
                 description: "",
                 qty : 1,
