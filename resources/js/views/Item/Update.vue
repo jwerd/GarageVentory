@@ -69,9 +69,9 @@
                                     <button type="submit" class="btn btn-primary" @click="save">
                                         Save
                                     </button>
-
+                                    <MarkItemSold v-show="!this.item.price_sold" :item="this.item"></MarkItemSold>
                                 </div>
-                            </div>
+                            </div>                      
                                 <br />
                                     <b-card bg-variant="light">
                                         <b-button class="btn-danger" size="sm" @click.stop="removeItem(item.id)">
@@ -89,13 +89,15 @@
 
 
 <script>
+    import MarkItemSold from "../../components/MarkItemSold"
     export default {
+        components: {MarkItemSold},
         data(){
             return {
                 id: this.$route.params.id,
                 item: [],
                 image: '',
-                selectedImage: {},
+                selectedImage: '',
                 btnDisabled : true
             }
         },
@@ -119,8 +121,8 @@
 
                     this.$api.put('/api/item/'+this.id, this.item)
                         .then(response => {
-                            const fd = new FormData()
                             if(this.selectedImage !== "") {
+                                const fd = new FormData()
                                 fd.append('image', this.selectedImage, this.selectedImage.name)
                                 this.$api.post('/api/ItemMedia/'+this.id, fd,
                                 {

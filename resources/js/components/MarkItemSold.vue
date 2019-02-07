@@ -1,5 +1,5 @@
 <template>
-    <b-button class="btn-success" size="sm" @click="markItemSold(item.id)">
+    <b-button v-show="this.show" class="btn-success" size="sm" @click="markItemSold(item.id)">
         Mark Item Sold
     </b-button>
 </template>
@@ -11,6 +11,7 @@
         props: ['item'],
         data () {
             return {
+                'show': true,
             }
         },
         computed: {
@@ -28,7 +29,8 @@
                 })
                 .then(price_sold => {
                     if (!price_sold) throw null;
-                    this.$api.patch('api/sold/'+id, {'available': false, 'price_sold': price_sold}).then(response => {
+                    this.$api.patch('/api/sold/'+id, {'available': false, 'price_sold': price_sold}).then(response => {
+                        this.show = false;
                         swal("Nice job!", "Item was marked as sold.", "success");
                         this.$emit('refreshItems', true);
                     })
