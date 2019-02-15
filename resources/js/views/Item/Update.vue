@@ -47,13 +47,13 @@
                                 <label for="size" class="col-sm-4 col-form-label text-md-right">Size (Dimensions)</label>
 
                                 <div class="col-md-2">
-                                    <input id="dimension_h" placeholder="Height" type="text" class="form-control" v-model="this.dimension_h" required>
+                                    <input id="dimension_h" placeholder="Height" type="text" class="form-control" v-model="item.dimension.height" required>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_d" placeholder="Depth" type="text" class="form-control" v-model="this.dimension_d" required>
+                                    <input id="dimension_d" placeholder="Depth" type="text" class="form-control" v-model="item.dimension.depth" required>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_l" placeholder="Length" type="text" class="form-control" v-model="this.dimension_l" required>
+                                    <input id="dimension_l" placeholder="Length" type="text" class="form-control" v-model="item.dimension.length" required>
                                 </div>
                             </div>
 
