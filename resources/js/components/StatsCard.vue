@@ -14,13 +14,13 @@
                 switch(type)
                 {
                     case "totalProjectedRevenue":
-                        return this.totalProjectedRevenue;
+                        return this.totalProjectedRevenue.toFixed(2);
                         break;
                     case "totalInvestment":
-                        return this.totalInvestment;
+                        return this.totalInvestment.toFixed(2);
                         break;
                     case "totalProfit":
-                        return this.totalProfit;
+                        return this.totalProfit.toFixed(2);
                         break;
                 }
             }
