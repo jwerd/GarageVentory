@@ -3,7 +3,7 @@
             <h5>Weekly Goal</h5>
             <b-progress height="2em" :show-value="false" :max="weeklyStats.max_total" show-progress>
                 <b-progress-bar variant="success" :show-value="false" :value="weeklyStats.total" animated>
-                    <template v-if="weeklyStats.total > 0">${{weeklyStats.total}} earned</template>
+                    <template v-if="weeklyStats.total > 0">${{weeklyStatsEarned}} earned</template>
                 </b-progress-bar>
             </b-progress>
             <div align="right">
@@ -30,10 +30,14 @@
         computed: {
             leftOfWeeklyGoal() {
                 if(this.weeklyStats.max_total > this.weeklyStats.total) {
-                    return this.weeklyStats.max_total-this.weeklyStats.total;
+                    let total = this.weeklyStats.max_total-this.weeklyStats.total;
+                    return total.toFixed(2);
                 }
                 return 0;
             },
+            weeklyStatsEarned() {
+                return this.weeklyStats.total.toFixed(2);
+            }
         },
         methods: {
             checkWeeklyGoal () {
