@@ -65,7 +65,7 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary" @click="save">
+                                    <button type="submit" class="btn btn-primary" :disabled="submitting === true" @click="save">
                                         Save
                                     </button>
 
@@ -95,6 +95,7 @@
                 dimension_l : "",
                 available : 1,
                 user_id: 1,
+                submitting: false,
                 btnDisabled : true
             }
         },
@@ -126,7 +127,7 @@
             save(e){
                 e.preventDefault()
                 if (this.name.length > 0) {
-
+                    this.submitting = true
                     this.$api.post('/api/item', {
                         name: this.name,
                         description: this.description,
@@ -142,7 +143,6 @@
                     })
                     .then(response => {
                             let id = response.data.data.id;
-                            console.log(response);
                             if(this.selectedImage !== "") {
                                 const fd = new FormData()
                                 fd.append('image', this.selectedImage, this.selectedImage.name)
@@ -159,6 +159,7 @@
                             this.$router.push('/');
                         })
                         .catch(function (error) {
+                            this.submitting = false
                             console.error(error);
                         });
                 }
