@@ -158,8 +158,8 @@
                             this.$noty.success("Item created successfully")
                             this.$router.push('/');
                         })
-                        .catch(function (error) {
-                            this.submitting = false
+                        .catch(function (error, submitting) {
+                            submitting = false
                             console.error(error);
                         });
                 }
