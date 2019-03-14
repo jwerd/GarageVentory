@@ -4,6 +4,8 @@ import axios        from 'axios'
 import BootstrapVue from 'bootstrap-vue'
 import VueNoty      from 'vuejs-noty'
 import swal         from 'sweetalert';
+import VueOffline from 'vue-offline'
+
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -25,6 +27,7 @@ Vue.use({
 
     }
 });
+Vue.use(VueOffline);
 
 /* todo: move filters to separate area*/
 Vue.filter('truncate', function (text, stop, clamp) {
