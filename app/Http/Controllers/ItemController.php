@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ItemsCollection;
 use App\Http\Resources\ItemResource;
+use App\Http\Requests\ItemStoreRequest;
 
 class ItemController extends Controller
 {
@@ -24,18 +25,8 @@ class ItemController extends Controller
             ->where('user_id', Auth::id())
             ->latest()
             ->get();
-        return new ItemsCollection($items);
-        //return response()->json($items);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new ItemsCollection($items);
     }
 
     /**
@@ -44,24 +35,10 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ItemStoreRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-        ]);
+        $item = Item::createFromRequest($request->validated());
 
-        $item = Item::create([
-            'name'        => $request->name,
-            'description' => $request->description,
-            'qty'         => 1,
-            'price'       => $request->price,
-            'list_price'  => $request->list_price,
-            'dimension'   => $request->dimension,
-            'available'   => 1,
-            'user_id'     => Auth::id() ?? 1,
-        ]);
-
-        //$item->addMedia($request->image)->toMediaCollection();
         $data = [
             'data'    => $item,
             'status'  => (bool) $item,
@@ -80,17 +57,6 @@ class ItemController extends Controller
     public function show(Item $item)
     {
         return new ItemResource($item);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Item $item)
-    {
-        //
     }
 
     /**
