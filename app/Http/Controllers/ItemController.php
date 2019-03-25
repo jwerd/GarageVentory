@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ItemsCollection;
 use App\Http\Resources\ItemResource;
 use App\Http\Requests\ItemStoreRequest;
-
+use App\Http\Requests\ItemUpdateRequest;
 class ItemController extends Controller
 {
     /**
@@ -66,17 +66,10 @@ class ItemController extends Controller
      * @param  \App\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Item $item)
+    public function update(ItemUpdateRequest $request, Item $item)
     {
-        $status = $item->update([
-            'name'        => $request->name,
-            'description' => $request->description,
-            'qty'         => 1,
-            'price'       => $request->price,
-            'list_price'  => $request->list_price,
-            'dimension'   => $request->dimension,
-            'user_id'     => Auth::id() ?? 1,
-        ]);
+        $status = $item->update($request->validated());
+
         if(isset($request->image)) {
             $item->addMedia($request->image)->toMediaCollection();
         }

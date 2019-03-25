@@ -47,13 +47,13 @@
                                 <label for="size" class="col-sm-4 col-form-label text-md-right">Size (Dimensions)</label>
 
                                 <div class="col-md-2">
-                                    <input id="dimension_h" placeholder="Height" type="text" class="form-control" v-model="item.dimension.height" required>
+                                    <input id="dimension_h" placeholder="Height" type="text" class="form-control" v-model="dimension.height" required>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_d" placeholder="Depth" type="text" class="form-control" v-model="item.dimension.depth" required>
+                                    <input id="dimension_d" placeholder="Depth" type="text" class="form-control" v-model="dimension.depth" required>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_l" placeholder="Length" type="text" class="form-control" v-model="item.dimension.length" required>
+                                    <input id="dimension_l" placeholder="Length" type="text" class="form-control" v-model="dimension.length" required>
                                 </div>
                             </div>
 
@@ -98,30 +98,30 @@
                 item: [],
                 image: '',
                 selectedImage: '',
-                dimension_h : "",
-                dimension_d : "",
-                dimension_l : "",
+                dimension: {
+                    'height': '',
+                    'depth': '',
+                    'length': '',
+                },
                 btnDisabled : true
             }
         },
         mounted() {
             this.$api.get('/api/item/'+this.id)
                 .then(response => {
-                    this.item        = response.data.data;
-                    this.image       = this.item.photo;
-                    this.dimension_h = this.item.dimension.height;
-                    this.dimension_d = this.item.dimension.depth;
-                    this.dimension_l = this.item.dimension.length;
+                    this.item        = response.data.data
+                    this.dimension   = this.item.dimension
+                    this.image       = this.item.photo
                 })
                 .catch(function (error) {
-                    console.error(error);
+                    console.error(error)
                 });
         },
         methods : {
             save(e){
                 e.preventDefault()
                 if (this.item.name.length > 0) {
-
+                    this.item.dimension = this.dimension
                     this.$api.put('/api/item/'+this.id, this.item)
                         .then(response => {
                             if(this.selectedImage !== "") {
@@ -140,7 +140,7 @@
                             this.$router.push('/');
                         })
                         .catch(function (error) {
-                            console.error(error);
+                            console.error(error)
                         });
                 }
             },
@@ -148,7 +148,7 @@
                 if(confirm('Are you sure you want to remove this item?')) {
                     this.$api.delete('/api/item/'+id, {'available': false}).then(response => {
                         this.$noty.success("Item deleted successfully...")
-                        this.$router.push('/');
+                        this.$router.push('/')
                     })
                 }
             },

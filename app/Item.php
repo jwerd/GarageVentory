@@ -47,11 +47,7 @@ class Item extends Model implements HasMedia
 
         return Item::create($request);
     }
-
-    public function updateFromRequest($request) {
-
-    }
-
+    
     public function user() {
         return $this->belongsTo(User::class);
     }
