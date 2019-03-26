@@ -63,6 +63,18 @@
                                     <input id="name" type="text" class="form-control" v-model="item.description" placeholder="Example: This was purchased at Habitat for Humanity" required autofocus>
                                 </div>
                             </div>
+                            
+                            <div class="form-group row">
+                                <label for="cost" class="col-sm-4 col-form-label text-md-right"></label>
+                                <div class="col-md-6">
+                                    <label>
+                                        <small>
+                                        Product Added On: {{item.added}}
+                                        </small>
+                                    </label>
+                                </div>
+                            </div>
+
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
@@ -71,14 +83,17 @@
                                     </button>
                                     <MarkItemSold v-show="!this.item.price_sold" :item="this.item"></MarkItemSold>
                                 </div>
-                            </div>                      
+                            </div>           
+                                       
                                 <br />
-                                    <b-card bg-variant="light">
-                                        <b-button class="btn-danger" size="sm" @click.stop="removeItem(item.id)">
-                                        Remove This Item
-                                        </b-button>
-                                        <span>* This is irreversible</span>
-                                    </b-card>
+                                    
+                                <b-card bg-variant="light">
+                                    <b-button class="btn-danger" size="sm" @click.stop="removeItem(item.id)">
+                                    Remove This Item
+                                    </b-button>
+                                    <span>* This is irreversible</span>
+                                </b-card>
+        
                         </form>
                     </div>
                 </div>

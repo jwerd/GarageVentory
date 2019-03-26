@@ -24,6 +24,7 @@ class ItemResource extends JsonResource
             'description' => $this->description,
             'dimension'   => $this->dimension,
             'available'   => $this->available,
+            'added'       => $this->created_at->format("m/d/Y"), //@temp we'll switch this to using js moment on the frontend
             'photo'       => $this->getFirstMediaUrl('', 'thumb'),
         ];
     }
