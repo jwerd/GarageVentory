@@ -147,7 +147,7 @@
                         //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                         { key: 'price_sold', label: 'Sold Price', sortable: true, 'class': 'text-center' },
                         //{ key: 'available', label: 'In Stock',  sortable: true },
-                        { key: 'removeaction', label: 'Actions' }
+                        { key: 'removeaction', label: 'Actions',  'class': 'text-right' }
                     ];
                     this.showSoldItemsLabel = 'Switch to Available Items';
                 } else {
@@ -193,7 +193,7 @@
                 //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                 //{ key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
                 //{ key: 'available', label: 'In Stock',  sortable: true },
-                { key: 'soldaction', label: 'Actions' }
+                { key: 'soldaction', label: 'Actions',  'class': 'text-right' }
             ]
             this.getItems()
         }
