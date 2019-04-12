@@ -202,11 +202,11 @@
 
 <style>
     thead { 
-        background-color: #6c757d;
+        background-color: #343a40;
         color: #fff;
     }
     tbody {
-        background-color: #e9ecef;
+        background-color: #f8f9fa;
     }
     td a {
         color: #000;
