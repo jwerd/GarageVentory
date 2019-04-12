@@ -199,3 +199,16 @@
         }
     }
 </script>
+
+<style>
+    thead { 
+        background-color: #6c757d;
+        color: #fff;
+    }
+    tbody {
+        background-color: #e9ecef;
+    }
+    td a {
+        color: #000;
+    }
+</style>
