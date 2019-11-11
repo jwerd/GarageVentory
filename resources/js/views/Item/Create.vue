@@ -33,12 +33,17 @@
                             <div class="form-group row">
                                 <label for="cost" class="col-sm-4 col-form-label text-md-right">Product Cost</label>
 
-                                <div class="col-md-3">
-                                    <input id="price" placeholder="Purchase Price" type="text" class="form-control" v-model="price" required>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <input id="list_price" placeholder="List Price" type="text" class="form-control" v-model="list_price" required>
+                                <div class="col-md-6">
+                                    <input id="price" placeholder="Purchase Price" type="text" class="form-control" v-model="price" @change="setPrice()" required>
+                                    <input ref="cogs" id="price" placeholder="Cost of Materials" type="text" class="form-control" @change="setPrice()" v-model="cogs" required>
+                                    <input  v-if="priceSet" id="price" placeholder="Desired Profit" type="text" class="form-control"  @change="setPrice()" v-model="profit" required>
+                                    <div  v-show="priceSetFinal">
+                                        Tax Rate 8.1%
+                                        <input disabled id="price" placeholder="Tax: 8.1%" type="text" class="form-control" v-model="tax" required>
+                                        
+                                        <strong>Suggested List Price:</strong>
+                                        <input ref="list_price" id="list_price" placeholder="List Price" type="text" class="form-control" v-model="list_price" required>
+                                    </div>
                                 </div>
                             </div>
 
@@ -89,6 +94,11 @@
                 description: "",
                 qty : 1,
                 price : "",
+                cogs : "",
+                tax : "",
+                profit : "",
+                priceSet: false,
+                priceSetFinal: false,
                 list_price : "",
                 dimension_h : "",
                 dimension_d : "",
@@ -168,6 +178,41 @@
                 if(this.name !== "" && this.qty !== "" && this.price !== "" && this.list_price !== "") {
                     this.btnDisabled = false;
                 }
+            },
+            roundBy5(x) { //@todo: move this to utils
+                return Math.ceil(x/5)*5;
+            },
+            setPrice() {
+                let sum = 0;
+                if(this.price !== "") {
+                    this.priceSet = true;
+                    //this.$refs.cogs.focus();
+                    sum = sum+parseFloat(this.price);
+                    console.log('setting price')
+                }
+
+                if(this.cogs !== "") {
+                    sum = sum+parseFloat(this.cogs);
+                    console.log('setting cogs')
+                }
+
+                if(this.profit !== "") {
+                    sum = sum+parseFloat(this.profit);
+                    console.log('setting profit')
+                }
+
+                if(this.price !== "" && this.cogs !== "" && this.profit !== "") {
+                    this.priceSetFinal = true;
+                    this.$refs.list_price.focus();
+                    let taxRate = .0810;
+                    let taxTotal = 0;
+                    taxTotal = parseFloat(sum * taxRate).toFixed(2);
+                    this.tax = taxTotal;
+                    console.log(taxTotal);
+                    sum = parseFloat(sum)+parseFloat(taxTotal);
+                    this.list_price = this.roundBy5(parseFloat(sum).toFixed(2));
+                }
+
             }
         }
     }
