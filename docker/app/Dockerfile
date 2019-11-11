@@ -24,9 +24,9 @@ RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" > /etc/apt
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C \
     && apt-get update \
     && apt-get install -y curl zip unzip git supervisor sqlite3 \
-    && apt-get install -y nginx php7.1-fpm php7.1-cli php7.1-mcrypt php7.1-gd php7.1-mysql \
-       php7.1-pgsql php7.1-imap php-memcached php7.1-mbstring php7.1-xml php7.1-curl \
-       php7.1-imagick php7.1-zip php7.1-bcmath php7.1-sqlite3 php7.1-xdebug \
+    && apt-get install -y nginx php7.3-fpm php7.3-cli php7.3-gd php7.3-mysql \
+       php7.3-pgsql php7.3-imap php-memcached php7.3-mbstring php7.3-xml php7.3-curl \
+       php7.3-imagick php7.3-zip php7.3-bcmath php7.3-sqlite3 php7.3-xdebug \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && mkdir /run/php \
 #    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
@@ -42,8 +42,8 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 COPY h5bp /etc/nginx/h5bp
 COPY default /etc/nginx/sites-available/default
-COPY php-fpm.conf /etc/php/7.1/fpm/php-fpm.conf
-COPY xdebug.ini /etc/php/7.1/mods-available/xdebug.ini
+COPY php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
+COPY xdebug.ini /etc/php/7.3/mods-available/xdebug.ini
 
 EXPOSE 80
 
