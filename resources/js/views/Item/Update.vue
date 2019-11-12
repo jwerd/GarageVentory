@@ -39,10 +39,23 @@
                                         <input ref="price" type="number" id="price" class="form-control" placeholder="Purchase Price" v-model="item.price">
                                         <label for="price">Purchase Price</label>
                                     </div>
-
+                                    <div v-if="listPriceNotSet">
+                                        <div class="form-label-group">
+                                            <input ref="com" id="com" placeholder="Cost of Materials" type="number" class="form-control" @change="setPrice()" v-model="com">
+                                            <label for="com">Cost of Materials</label>
+                                        </div>
+                                        <div class="form-label-group">
+                                            <input  id="profit" placeholder="Desired Profit" type="number" class="form-control"  v-on:keyup="setPrice()" v-model="profit">
+                                            <label for="profit">Desired Profit</label>
+                                        </div>
+                                        <div class="form-label-group">
+                                            <input disabled id="tax" placeholder="Tax Rate: 8.1%" type="number" class="form-control"  v-model="tax">
+                                            <label for="tax">Tax Rate: 8.1%</label>
+                                        </div>
+                                    </div>
                                     <div class="form-label-group">
-                                        <input ref="list_price" type="number" id="list_price" class="form-control" placeholder="List Price" v-model="item.list_price">
-                                        <label for="list_price">List Price</label>
+                                        <input ref="list_price" id="list_price" placeholder="List Price" type="number" class="form-control" v-model="item.list_price" required>
+                                        <label for="tax">List Price</label>
                                     </div>
                                 </div>
                             </div>
@@ -127,6 +140,12 @@
                 item: [],
                 image: '',
                 selectedImage: '',
+                com : '',
+                tax : '',
+                profit : '',
+                listPriceNotSet: false,
+                priceSet: false,
+                priceSetFinal: false,
                 dimension: {
                     'height': '',
                     'depth': '',
@@ -139,6 +158,9 @@
             this.$api.get('/api/item/'+this.id)
                 .then(response => {
                     this.item        = response.data.data
+                    if(!this.item.list_price) {
+                        this.listPriceNotSet = true;
+                    }
                     this.dimension   = this.item.dimension
                     this.image       = this.item.photo
                 })
@@ -209,6 +231,37 @@
                 if(this.name !== "" && this.qty !== "" && this.price !== "" && this.list_price !== "") {
                     this.btnDisabled = false;
                 }
+            },
+            roundBy5(x) { //@todo: move this to utils
+                return Math.ceil(x/5)*5;
+            },
+            setPrice() {
+                let sum = 0;
+                if(this.item.price !== "") {
+                    this.priceSet = true;
+                    //this.$refs.com.focus();
+                    sum = sum+parseFloat(this.item.price);
+                }
+
+                if(this.com !== "") {
+                    sum = sum+parseFloat(this.com);
+                }
+
+                if(this.profit !== "") {
+                    sum = sum+parseFloat(this.profit);
+                }
+
+                if(this.item.price !== "" && this.com !== "" && this.profit !== "") {
+                    this.priceSetFinal = true;
+                    //this.$refs.list_price.focus();
+                    let taxRate = .0810;
+                    let taxTotal = 0;
+                    taxTotal = parseFloat(sum * taxRate).toFixed(2);
+                    this.tax = taxTotal;
+                    sum = parseFloat(sum)+parseFloat(taxTotal);
+                    this.item.list_price = this.roundBy5(parseFloat(sum).toFixed(2));
+                }
+
             }
         }
     }

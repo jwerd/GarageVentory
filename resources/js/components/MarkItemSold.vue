@@ -1,5 +1,5 @@
 <template>
-    <b-button v-show="this.show" class="btn-success" size="sm" @click="markItemSold(item.id)">
+    <b-button v-show="this.show" class="btn-success" @click="markItemSold(item.id)">
         Mark Item Sold
     </b-button>
 </template>
