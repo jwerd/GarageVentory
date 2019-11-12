@@ -32,14 +32,18 @@
                             </div>
                             
                             <div class="form-group row">
-                                <label for="cost" class="col-sm-4 col-form-label text-md-right">Product Cost</label>
+                                <label for="cost" class="col-sm-4 col-form-label text-md-right">Product Cost ($)</label>
+                                    
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <input ref="price" type="number" id="price" class="form-control" placeholder="Purchase Price" v-model="item.price">
+                                        <label for="price">Purchase Price</label>
+                                    </div>
 
-                                <div class="col-md-3">
-                                    <input id="price" placeholder="Purchase Price" type="text" class="form-control" v-model="item.price" required>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <input id="list_price" placeholder="List Price" type="text" class="form-control" v-model="item.list_price" required>
+                                    <div class="form-label-group">
+                                        <input ref="list_price" type="number" id="list_price" class="form-control" placeholder="List Price" v-model="item.list_price">
+                                        <label for="list_price">List Price</label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -47,14 +51,24 @@
                                 <label for="size" class="col-sm-4 col-form-label text-md-right">Size (Dimensions)</label>
 
                                 <div class="col-md-2">
-                                    <input id="dimension_h" placeholder="Height" type="text" class="form-control" v-model="dimension.height" required>
+                                    <div class="form-label-group">
+                                        <input id="dimension_h" placeholder="Height" type="number" class="form-control" v-model="dimension.height" required>
+                                        <label for="dimension_h">Height</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_d" placeholder="Depth" type="text" class="form-control" v-model="dimension.depth" required>
+                                    <div class="form-label-group">
+                                        <input id="dimension_d" placeholder="Depth" type="number" class="form-control" v-model="dimension.depth" required>
+                                        <label for="dimension_d">Depth</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_l" placeholder="Length" type="text" class="form-control" v-model="dimension.length" required>
+                                    <div class="form-label-group">
+                                        <input id="dimension_l" placeholder="Length" type="number" class="form-control" v-model="dimension.length" required>
+                                        <label for="dimension_l">Length</label>
+                                    </div>
                                 </div>
+
                             </div>
 
                             <div class="form-group row">

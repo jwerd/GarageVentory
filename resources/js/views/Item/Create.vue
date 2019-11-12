@@ -31,18 +31,32 @@
                             </div>
                             
                             <div class="form-group row">
-                                <label for="cost" class="col-sm-4 col-form-label text-md-right">Product Cost</label>
+                                <label for="cost" class="col-sm-4 col-form-label text-md-right">Product Cost ($)</label>
 
                                 <div class="col-md-6">
-                                    <input id="price" placeholder="Purchase Price" type="text" class="form-control" v-model="price" @change="setPrice()" required>
-                                    <input ref="cogs" id="price" placeholder="Cost of Materials" type="text" class="form-control" @change="setPrice()" v-model="cogs" required>
-                                    <input  v-if="priceSet" id="price" placeholder="Desired Profit" type="text" class="form-control"  @change="setPrice()" v-model="profit" required>
-                                    <div  v-show="priceSetFinal">
-                                        Tax Rate 8.1%
-                                        <input disabled id="price" placeholder="Tax: 8.1%" type="text" class="form-control" v-model="tax" required>
+                                    <div class="form-label-group">
+                                        <input ref="price" type="number" id="price" class="form-control" placeholder="Purchase Price" v-model="price" v-on:keyup="setPrice()">
+                                        <label for="price">Purchase Price</label>
+                                    </div>
+                                    <div class="form-label-group">
+                                        <input ref="com" id="com" placeholder="Cost of Materials" type="number" class="form-control" @change="setPrice()" v-model="com">
+                                        <label for="com">Cost of Materials</label>
+                                    </div>
+                                    <div v-if="priceSet" class="form-label-group">
+                                        <input  id="profit" placeholder="Desired Profit" type="number" class="form-control"  v-on:keyup="setPrice()" v-model="profit">
+                                        <label for="profit">Desired Profit</label>
+                                    </div>
+                                    
+                                    <div v-show="priceSetFinal">
+                                        <div class="form-label-group">
+                                            <input disabled id="tax" placeholder="Tax Rate: 8.1%" type="number" class="form-control"  v-model="tax">
+                                            <label for="tax">Tax Rate: 8.1%</label>
+                                        </div>
+                                        <div class="form-label-group">
+                                            <input ref="list_price" id="list_price" placeholder="List Price" type="number" class="form-control" v-model="list_price" required>
+                                            <label for="tax">Suggested List Price</label>
+                                        </div>
                                         
-                                        <strong>Suggested List Price:</strong>
-                                        <input ref="list_price" id="list_price" placeholder="List Price" type="text" class="form-control" v-model="list_price" required>
                                     </div>
                                 </div>
                             </div>
@@ -51,13 +65,22 @@
                                 <label for="size" class="col-sm-4 col-form-label text-md-right">Size (Dimensions)</label>
 
                                 <div class="col-md-2">
-                                    <input id="dimension_h" placeholder="Height" type="text" class="form-control" v-model="dimension_h" required>
+                                    <div class="form-label-group">
+                                        <input id="dimension_h" placeholder="Height" type="number" class="form-control" v-model="dimension_h" required>
+                                        <label for="dimension_h">Height</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_d" placeholder="Depth" type="text" class="form-control" v-model="dimension_d" required>
+                                    <div class="form-label-group">
+                                        <input id="dimension_d" placeholder="Depth" type="number" class="form-control" v-model="dimension_d" required>
+                                        <label for="dimension_d">Depth</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <input id="dimension_l" placeholder="Length" type="text" class="form-control" v-model="dimension_l" required>
+                                    <div class="form-label-group">
+                                        <input id="dimension_l" placeholder="Length" type="number" class="form-control" v-model="dimension_l" required>
+                                        <label for="dimension_l">Length</label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -94,7 +117,7 @@
                 description: "",
                 qty : 1,
                 price : "",
-                cogs : "",
+                com : "",
                 tax : "",
                 profit : "",
                 priceSet: false,
@@ -186,14 +209,14 @@
                 let sum = 0;
                 if(this.price !== "") {
                     this.priceSet = true;
-                    //this.$refs.cogs.focus();
+                    //this.$refs.com.focus();
                     sum = sum+parseFloat(this.price);
                     console.log('setting price')
                 }
 
-                if(this.cogs !== "") {
-                    sum = sum+parseFloat(this.cogs);
-                    console.log('setting cogs')
+                if(this.com !== "") {
+                    sum = sum+parseFloat(this.com);
+                    console.log('setting com')
                 }
 
                 if(this.profit !== "") {
@@ -201,9 +224,9 @@
                     console.log('setting profit')
                 }
 
-                if(this.price !== "" && this.cogs !== "" && this.profit !== "") {
+                if(this.price !== "" && this.com !== "" && this.profit !== "") {
                     this.priceSetFinal = true;
-                    this.$refs.list_price.focus();
+                    //this.$refs.list_price.focus();
                     let taxRate = .0810;
                     let taxTotal = 0;
                     taxTotal = parseFloat(sum * taxRate).toFixed(2);
