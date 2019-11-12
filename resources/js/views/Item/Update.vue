@@ -53,7 +53,7 @@
                                             <label for="tax">Tax Rate: 8.1%</label>
                                         </div>
                                     </div>
-                                    <div class="form-label-group">
+                                    <div v-show="item.list_price" class="form-label-group">
                                         <input ref="list_price" id="list_price" placeholder="List Price" type="number" class="form-control" v-model="item.list_price" required>
                                         <label for="tax">List Price</label>
                                     </div>
