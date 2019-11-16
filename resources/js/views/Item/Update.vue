@@ -200,11 +200,12 @@
                         });
                 }
             },
-            recalc() {
-                this.listPriceNotSet = true;
-                this.item.list_price = null;
+            recalc(e) {
+                e.preventDefault()
+                this.listPriceNotSet = true
+                this.item.list_price = null
                 this.$nextTick(function(){
-                    this.$refs.com.focus();
+                    this.$refs.com.focus()
                 });
             },
             removeItem(id) {
