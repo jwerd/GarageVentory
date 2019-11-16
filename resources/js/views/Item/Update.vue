@@ -53,6 +53,11 @@
                                             <label for="tax">Tax Rate: 8.1%</label>
                                         </div>
                                     </div>
+                                    <div class="form-label-group" v-else>
+                                        <button type="submit" class="btn btn-secondary" @click="recalc">
+                                        Re-Calculate
+                                        </button>
+                                    </div>
                                     <div v-show="item.list_price" class="form-label-group">
                                         <input ref="list_price" id="list_price" placeholder="List Price" type="number" class="form-control" v-model="item.list_price" required>
                                         <label for="tax">List Price</label>
@@ -194,6 +199,13 @@
                             console.error(error)
                         });
                 }
+            },
+            recalc() {
+                this.listPriceNotSet = true;
+                this.item.list_price = null;
+                this.$nextTick(function(){
+                    this.$refs.com.focus();
+                });
             },
             removeItem(id) {
                 if(confirm('Are you sure you want to remove this item?')) {
