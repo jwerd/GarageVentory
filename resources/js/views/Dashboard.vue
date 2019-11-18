@@ -147,6 +147,7 @@
                         //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                         { key: 'price_sold', label: 'Sold Price', sortable: true, 'class': 'text-center' },
                         //{ key: 'available', label: 'In Stock',  sortable: true },
+                        { key: 'updated', label: 'Sold On', sortable: true, 'class': 'text-center' },
                         { key: 'removeaction', label: 'Actions',  'class': 'text-right' }
                     ];
                     this.showSoldItemsLabel = 'Switch to Available Items';
