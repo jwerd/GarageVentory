@@ -6,6 +6,7 @@ use App\Item;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class SoldItemController extends Controller
 {
@@ -18,7 +19,10 @@ class SoldItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        $status = $item->update($request->only(['available', 'price_sold']));
+        $merged = array_merge(['sold_on' => Carbon::now()],
+            $request->only(['available', 'price_sold']));
+
+        $status = $item->update($merged);
 
         return response()->json([
             'status' => $status,

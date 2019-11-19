@@ -17,6 +17,7 @@ class Item extends Model implements HasMedia
 
     protected $casts = [
         'dimension' => 'array',
+        'sold_on'   => 'datetime',
     ];
 
     public $incremeting = true;
@@ -29,18 +30,21 @@ class Item extends Model implements HasMedia
         'price',
         'list_price',
         'price_sold',
+        'sold_on',
         'dimension',
         'available',
         'user_id',
     ];
 
-    protected static function boot() {
+    protected static function boot() 
+    {
         parent::boot();
 
         static::addGlobalScope(new ItemScope);
     }
 
-    public static function createFromRequest($request) {
+    public static function createFromRequest($request)
+    {
         $request = array_merge($request, [
             'user_id' => Auth::id()
         ]);
@@ -48,13 +52,21 @@ class Item extends Model implements HasMedia
         return Item::create($request);
     }
     
-    public function user() {
+    public function user() 
+    {
         return $this->belongsTo(User::class);
     }
     
-    public function registerMediaConversions(Media $media = null) {
+    public function registerMediaConversions(Media $media = null) 
+    {
         $this->addMediaConversion('thumb')
               ->width(200)
               ->sharpen(10);
+    }
+
+    public function getSoldOnAttribute($value)
+    {
+        // Return the sold_on if set
+        return $value ?? $this->updated_at;
     }
 }

@@ -25,7 +25,7 @@ class ItemResource extends JsonResource
             'dimension'   => $this->dimension,
             'available'   => $this->available,
             'added'       => $this->created_at->format("m/d/Y"), //@temp we'll switch this to using js moment on the frontend
-            'updated'     => $this->updated_at->format("m/d/Y"),
+            'sold_on'     => $this->sold_on,
             'photo'       => $this->getFirstMediaUrl('', 'thumb'),
         ];
     }

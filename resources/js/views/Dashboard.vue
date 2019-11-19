@@ -57,6 +57,7 @@
             <template slot="soldaction" slot-scope="row">
                 <MarkItemSold :item="row.item" @refreshItems="getItems"></MarkItemSold>
             </template>
+            <template slot="sold_on" slot-scope="row">{{row.item.sold_on | date}}</template>
             <template slot="removeaction" slot-scope="row">
                 <b-button class="btn-danger" size="sm" @click.stop="removeItem(row.item.id)">
                     Remove
@@ -140,14 +141,15 @@
             },
             soldItemsToggle () {
                 this.showSoldItems = !this.showSoldItems;
+                this.items = [];
                 if(this.showSoldItems) {
                     this.fields = [
                         { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
-                        { key: 'dimension', label: 'Dimensions (h/d/l)',  sortable: false,  'class': 'text-center' },
+                        //{ key: 'dimension', label: 'Dimensions (h/d/l)',  sortable: false,  'class': 'text-center' },
                         //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
                         { key: 'price_sold', label: 'Sold Price', sortable: true, 'class': 'text-center' },
                         //{ key: 'available', label: 'In Stock',  sortable: true },
-                        { key: 'updated', label: 'Sold On', sortable: true, 'class': 'text-center' },
+                        { key: 'sold_on', label: 'Sold On', sortable: true, 'class': 'text-center' },
                         { key: 'removeaction', label: 'Actions',  'class': 'text-right' }
                     ];
                     this.showSoldItemsLabel = 'Switch to Available Items';

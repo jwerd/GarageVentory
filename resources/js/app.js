@@ -3,9 +3,9 @@ import VueRouter    from 'vue-router'
 import axios        from 'axios'
 import BootstrapVue from 'bootstrap-vue'
 import VueNoty      from 'vuejs-noty'
-import swal         from 'sweetalert';
+import swal         from 'sweetalert'
 import VueOffline from 'vue-offline'
-
+import moment from 'moment'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -32,6 +32,10 @@ Vue.use(VueOffline);
 /* todo: move filters to separate area*/
 Vue.filter('truncate', function (text, stop, clamp) {
     return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+});
+
+Vue.filter('date', function (date) {
+    return moment(date).calendar()
 });
 
 import App          from './views/App'
