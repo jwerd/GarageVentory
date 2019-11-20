@@ -13,19 +13,19 @@ services:
      - .:/var/www/html
     networks:
      - digi
-  node:
-    build:
-      context: ./docker/node
-      dockerfile: Dockerfile
-      args:
-        uid: "999"
+#  node:
+#    build:
+#      context: ./docker/node
+#      dockerfile: Dockerfile
+#      args:
+#        uid: "999"
 #   image: digi/node
-    user: root
-    tty: true
-    volumes:
-      - .:/var/www/html
-    networks:
-      - digi
+#    user: root
+#    tty: true
+#    volumes:
+#      - .:/var/www/html
+#    networks:
+#      - digi
 #  ngrok:
 #    image: wernight/ngrok
 #    links:
@@ -37,13 +37,13 @@ services:
 #    networks:
 #      - digi
   mysql:
-    image: mysql:latest
+    image: mysql:5.7
     ports:
      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "secret"
       MYSQL_DATABASE: "homestead"
-      MYSQL_USER: "homestead"
+      MYSQL_USER: "root"
       MYSQL_PASSWORD: "secret"
     volumes:
      - digimysql:/var/lib/mysql

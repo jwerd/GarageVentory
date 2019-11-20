@@ -29,6 +29,8 @@ RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" > /etc/apt
        php7.3-imagick php7.3-zip php7.3-bcmath php7.3-sqlite3 php7.3-xdebug \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && mkdir /run/php \
+    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install -y nodejs \
 #    && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
 #    && apt-get install -y nodejs \
 #    && curl -L https://unpkg.com/@pnpm/self-installer | node \
