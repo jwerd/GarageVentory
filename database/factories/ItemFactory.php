@@ -16,7 +16,7 @@ $factory->define(Item::class, function (Faker $faker) {
         'price_sold'  => false,
         'sold_on'     => null,
         'dimension'   => '',
-        'available'   => 1,
+        'available'   => true,
         'user_id'     => function () {
             return factory(User::class)->create()->id;
         },
