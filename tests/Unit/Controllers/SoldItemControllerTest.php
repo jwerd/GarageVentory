@@ -14,6 +14,15 @@ class SoldItemControllerTest extends TestCase
     
     public function testMarkItemSold()
     {
+        list($user, $item) = $this->makeItem();
+
+        $response = $this->actingAs($user, 'api')
+            ->json('PATCH', '/api/sold/'.$item->id)
+            ->assertStatus(200)->assertJson([
+                'status' => true,
+                'message' => 'Item Updated!'
+            ]);
+
         $this->assertTrue(true);
     }
 }

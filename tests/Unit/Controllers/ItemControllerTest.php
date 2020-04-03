@@ -95,14 +95,4 @@ class ItemControllerTest extends TestCase
                 'message' => 'Item Deleted!'
             ]);
     }
-
-    protected function makeItem()
-    {
-        $user = factory(User::class)->create();
-        $item = factory(Item::class)->create([
-            'user_id' => $user->id,
-        ]);
-
-        return [$user,$item];
-    }
 }
