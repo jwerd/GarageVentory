@@ -22,7 +22,5 @@ class SoldItemControllerTest extends TestCase
                 'status' => true,
                 'message' => 'Item Updated!'
             ]);
-
-        $this->assertTrue(true);
     }
 }

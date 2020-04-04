@@ -14,6 +14,20 @@ class WeeklyRevenueCheckTest extends TestCase
 
     public function testGet()
     {
-        $this->assertTrue(true);
+        $price_sold = 300;
+        $user = factory(User::class)->create();
+        // Mark product sold
+        $item = factory(Item::class)->create([
+            'user_id'    => $user->id,
+            'price'      => 100,
+            'price_sold' => $price_sold,
+            'available'  => false,
+        ]);
+
+        $response = $this->actingAs($user, 'api')
+            ->json('GET', '/api/weeklyRevenueCheck')
+            ->assertStatus(200)->assertJson([
+                'total' => $price_sold,
+            ]);
     }
 }
