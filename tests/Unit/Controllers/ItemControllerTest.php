@@ -95,4 +95,18 @@ class ItemControllerTest extends TestCase
                 'message' => 'Item Deleted!'
             ]);
     }
+
+    public function testItemUpdate()
+    {
+        list($user, $item) = $this->makeItem();
+
+        $response = $this->actingAs($user, 'api')
+            ->json('PUT', '/api/item/'.$item->id, [
+                'name' => 'New Item Name',
+            ])
+            ->assertStatus(200)->assertJson([
+                'status' => true,
+                'message' => 'Item Updated!'
+            ]);
+    }
 }
