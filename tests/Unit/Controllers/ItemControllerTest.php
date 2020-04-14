@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Item;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use \Illuminate\Support\Str;
 
@@ -37,6 +38,21 @@ class ItemControllerTest extends TestCase
             )->assertJsonCount(2);
     }
 
+    public function testFetchOnlySoldItems()
+    {
+        $this->markTestIncomplete();
+        $user = factory(User::class)->create();
+        $item = factory(Item::class)->create([
+            'available' => false,
+            'user_id' => $user->id,
+        ]);
+        
+        $response = $this->actingAs($user, 'api')
+            ->json('GET', '/api/item?showSoldItems=false')
+            ->getContent();
+            //->assertStatus(200)->assertJsonCount(2);
+    }
+
     public function testFetchItem()
     {
         list($user, $item) = $this->makeItem();
@@ -59,8 +75,6 @@ class ItemControllerTest extends TestCase
                 ]
             )->assertJsonCount(1);
     }
-
-    
 
     public function testItemCreation()
     {
