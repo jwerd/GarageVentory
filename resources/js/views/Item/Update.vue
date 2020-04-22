@@ -62,6 +62,10 @@
                                         <input ref="list_price" id="list_price" placeholder="List Price" type="number" class="form-control" v-model="item.list_price" required>
                                         <label for="tax">List Price</label>
                                     </div>
+                                    <div v-show="previousListPrice" class="form-label-group">
+                                        <input disabled ref="previous_list_price" id="previous_list_price" placeholder="Previous List Price" type="number" class="form-control" v-model="previousListPrice">
+                                        <label for="tax">Previous List Price</label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -148,6 +152,7 @@
                 com : '',
                 tax : '',
                 profit : '',
+                previousListPrice : '',
                 listPriceNotSet: false,
                 priceSet: false,
                 priceSetFinal: false,
@@ -203,6 +208,7 @@
             recalc(e) {
                 e.preventDefault()
                 this.listPriceNotSet = true
+                this.previousListPrice = this.item.list_price;
                 this.item.list_price = null
                 this.$nextTick(function(){
                     this.$refs.com.focus()
