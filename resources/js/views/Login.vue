@@ -61,8 +61,8 @@
                             localStorage.setItem('user',response.data.success.name)
                             localStorage.setItem('jwt',response.data.success.token)
 
-                            if (localStorage.getItem('jwt') != null){
-                                this.$router.go('/board')
+                            if (localStorage.getItem('jwt') !== null){
+                                this.$router.go('/dashboard')
                             }
                         })
                         .catch(function (error) {

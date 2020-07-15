@@ -76,7 +76,7 @@ const router = new VueRouter({
     ],
 });
 router.beforeEach((to, from, next) => {
-    if (localStorage.getItem('jwt') === null) {
+    if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === "") {
         if (to.name !== "login") {
             next('/login');
         }
