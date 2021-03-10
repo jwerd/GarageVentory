@@ -1,6 +1,6 @@
 <template>
     <b-button v-show="this.show" class="btn-success" @click="markItemSold(item.id)">
-        Mark Item Sold
+        Item Sold
     </b-button>
 </template>
 
@@ -15,7 +15,7 @@
             }
         },
         computed: {
-            
+
         },
         methods: {
             markItemSold(id) {

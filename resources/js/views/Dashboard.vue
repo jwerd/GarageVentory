@@ -44,7 +44,7 @@
                 <router-link :to="{ name: 'itemUpdate', params: { id: row.item.id }}">{{row.value | truncate(50)}}</router-link>
                 <template v-show="row.item.description"><p class="subtitle-description">{{row.item.description}}</p></template>
             </template>
-            <template slot="price" slot-scope="row">${{row.value}}</template>
+            <template slot="price" slot-scope="row"><div v-html="formatPrice(row.item)"></div></template>
             <template slot="list_price" slot-scope="row">${{row.value}}</template>
             <template slot="price_sold" slot-scope="row">{{row.value?'$'+row.value:'N/A'}}</template>
             <template slot="dimension" slot-scope="row">
@@ -159,6 +159,16 @@
                 }
                 this.getItems()
             },
+            formatPrice(item)
+            {
+                let price = '$'+item.price;
+
+                if(item.list_price != "0") {
+                    price += " / " + '<strong>$'+item.list_price+'</strong>';
+                }
+
+                return price;
+            },
             getItems () {
                 let endpoint = 'api/item';
                 if(this.showSoldItems) {
@@ -193,7 +203,7 @@
                 //{ key: 'photo_with_name', label: '#', sortable: false },
                 { key: 'name', label: 'Name', sortable: true, sortDirection: 'desc' },
                 { key: 'dimension', label: 'Dimensions (h/d/l)',  sortable: false,  'class': 'text-center' },
-                //{ key: 'price', label: 'Purchase Price', sortable: true, 'class': 'text-center' },
+                { key: 'price', label: 'Price', sortable: true, 'class': 'text-center' },
                 //{ key: 'list_price', label: 'List Price', sortable: true, 'class': 'text-center' },
                 //{ key: 'available', label: 'In Stock',  sortable: true },
                 { key: 'soldaction', label: 'Actions',  'class': 'text-right' }
@@ -204,7 +214,7 @@
 </script>
 
 <style>
-    thead { 
+    thead {
         background-color: #343a40;
         color: #fff;
     }
