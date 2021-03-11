@@ -30,10 +30,10 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group row">
                                 <label for="cost" class="col-sm-4 col-form-label text-md-right">Product Cost ($)</label>
-                                    
+
                                 <div class="col-md-6">
                                     <div class="form-label-group">
                                         <input ref="price" type="number" id="price" class="form-control" placeholder="Purchase Price" v-model="item.price">
@@ -99,7 +99,7 @@
                                     <input id="name" type="text" class="form-control" v-model="item.description" placeholder="Example: This was purchased at Habitat for Humanity" required autofocus>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group row">
                                 <label for="cost" class="col-sm-4 col-form-label text-md-right"></label>
                                 <div class="col-md-6">
@@ -114,22 +114,22 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary" @click="save">
+                                    <button type="submit" class="btn btn-primary" :disabled="submitting === true" @click="save">
                                         Save
                                     </button>
                                     <MarkItemSold v-show="!this.item.price_sold" :item="this.item"></MarkItemSold>
                                 </div>
-                            </div>           
-                                       
+                            </div>
+
                                 <br />
-                                    
+
                                 <b-card bg-variant="light">
                                     <b-button class="btn-danger" size="sm" @click.stop="removeItem(item.id)">
                                     Remove This Item
                                     </b-button>
                                     <span>* This is irreversible</span>
                                 </b-card>
-        
+
                         </form>
                     </div>
                 </div>
@@ -161,6 +161,7 @@
                     'depth': '',
                     'length': '',
                 },
+                submitting: false,
                 btnDisabled : true
             }
         },
@@ -183,6 +184,7 @@
                 e.preventDefault()
                 if (this.item.name.length > 0) {
                     this.item.dimension = this.dimension
+                    this.submitting = true;
                     this.$api.put('/api/item/'+this.id, this.item)
                         .then(response => {
                             if(this.selectedImage !== "") {
@@ -200,7 +202,8 @@
                             this.$noty.success("Item updated successfully")
                             this.$router.push('/');
                         })
-                        .catch(function (error) {
+                        .catch(function (error, submitting) {
+                            submitting = false
                             console.error(error)
                         });
                 }
