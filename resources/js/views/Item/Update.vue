@@ -81,7 +81,7 @@
                                 <div class="col-md-2">
                                     <div class="form-label-group">
                                         <input id="dimension_d" placeholder="Depth" type="number" class="form-control" v-model="dimension.depth" required>
-                                        <label for="dimension_d">Depth</label>
+                                        <label for="dimension_d">Width</label>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -158,7 +158,7 @@
                 priceSetFinal: false,
                 dimension: {
                     'height': '',
-                    'depth': '',
+                    'width': '',
                     'length': '',
                 },
                 submitting: false,

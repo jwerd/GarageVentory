@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group row">
                                 <label for="cost" class="col-sm-4 col-form-label text-md-right">Product Cost ($)</label>
 
@@ -53,7 +53,7 @@
                                 <div class="col-md-2">
                                     <div class="form-label-group">
                                         <input id="dimension_d" placeholder="Depth" type="number" class="form-control" v-model="dimension_d" required>
-                                        <label for="dimension_d">Depth</label>
+                                        <label for="dimension_d">Width</label>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
