@@ -158,7 +158,7 @@
                 priceSetFinal: false,
                 dimension: {
                     'height': '',
-                    'width': '',
+                    'depth': '',
                     'length': '',
                 },
                 submitting: false,
