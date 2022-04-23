@@ -8,7 +8,7 @@ use App\Item;
 
 class WeeklyRevenueCheck extends Controller
 {
-    private $weeklyThreshold = 300; // this will change
+    private $weeklyThreshold = 500; // this will change
 
     public function __invoke(Request $request)
     {
@@ -22,12 +22,12 @@ class WeeklyRevenueCheck extends Controller
 
         // Math
         $percent = $sum / $this->weeklyThreshold * 100;
-        
+
         // Return data to user
         return response()->json([
             'max_total'    => (int) $this->weeklyThreshold,
             'total'        => $sum,
-            'metThreshold' => $metThreshold, 
+            'metThreshold' => $metThreshold,
             'percent'      => $percent,
         ]);
     }
