@@ -49,7 +49,7 @@
             <template slot="price_sold" slot-scope="row">{{row.value?'$'+row.value:'N/A'}}</template>
             <template slot="dimension" slot-scope="row">
                 <span v-show="row.value.height">H{{row.value.height}}"<br /></span>
-                <span v-show="row.value.depth">D{{row.value.depth}}"<br /></span>
+                <span v-show="row.value.depth">W{{row.value.depth}}"<br /></span>
                 <span v-show="row.value.length">L{{row.value.length}}"</span>
             </template>
             <template slot="available" slot-scope="row">{{row.value?'Available':'Not Available'}}
